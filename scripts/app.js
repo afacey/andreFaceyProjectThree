@@ -20,6 +20,30 @@ game.getRandomIdx = function(array) {
   return idx;
 }
 
+
+game.getRandomNames = function(notIdx) {
+  // make a copy of the players array
+  const players = game.players.slice();
+  
+  // remove the players name from the copy of the players array
+  players.splice(notIdx, 1);
+  
+  // create an array to hold the player names
+  const playerNames = [];
+  
+  for (let i = 0; i < 3; i++) {
+    // get a random index of the functions players array
+    const randomIdx = game.getRandomIdx(players);
+    // push name of player at the random index of the players array
+    playerNames.push(players[randomIdx].name);
+    // remove that name from the players array
+    players.splice(randomIdx, 1);
+  }
+  
+  // return the 3 randomly selected names
+  return playerNames; 
+}
+
 game.populateQuestions = function() {
   // make a copy of the players array
   const questions = game.players.slice();
@@ -34,34 +58,66 @@ game.populateQuestions = function() {
   game.questions = questions;
 }
 
-game.getRandomNames = function(notIdx) {
-  // make a copy of the players array
-  const players = game.players.slice();
+game.displayQuestion = function() {
+  const randomIdx = game.getRandomIdx(game.questions);
+  const question = game.questions[randomIdx];
+  
+  // Display player's image
+  $('.game__playerImg').attr('src', question.imgSrc);
 
-  // remove the players name from the copy of the players array
-  players.splice(notIdx, 1);
+  // Display question count
+  $('.game__questionNumber').text(`${game.questionsAnswered + 1} / ${game.questionMax}`);
+  
+  // Display name options
+  $('.game__form label').each(function(idx) {
+    const playerName = question.gameNames[idx];
+    const labelFor = $(this).attr('for');
+    
+    // Set label text to playerName
+    $(this).text(playerName);
 
-  // create an array to hold the player names
-  const playerNames = [];
-
-  for (let i = 0; i < 3; i++) {
-    // get a random index of the functions players array
-    const randomIdx = game.getRandomIdx(players);
-    // push name of player at the random index of the players array
-    playerNames.push(players[randomIdx].name);
-    // remove that name from the players array
-    players.splice(randomIdx, 1);
-  }
-
-  // return the 3 randomly selected names
-  return playerNames; 
+    // Set input value to playerName
+    $(`#${labelFor}`).attr('value', playerName);
+  })
 }
 
 game.getNextQuestion = function() {
 
 }
 
+// EVENT LISTENERS
+game.handleSubmit = $('form').on('submit', function(evt) {
+  evt.preventDefault();
+
+  // Get value of the selected answer
+  const answer = $('form input[name="player"]:checked').val();
+  
+  // If answer has a value and its value is not "on"
+  if (answer && answer !== "on") {
+    console.log(answer);
+    console.log('next question')
+    
+    // Remove checked property of selected answer
+    $('.game__form input[name="player"]:checked').prop("checked", false);
+    
+    // Increment questionsAnswered counter
+    game.questionsAnswered++;
+
+    // Display the next question
+    game.displayQuestion();
+
+  } else {
+    console.log('question must be answered to move forward')
+  }
+});
+
 // DOCUMENT READY
 $(function() {
   console.log("document ready");
+
+  console.log("populating questions");
+  game.populateQuestions();
+
+  console.log("Displaying next question");
+  game.displayQuestion();
 });
