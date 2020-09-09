@@ -10,10 +10,20 @@ game.questionsAnswered = 0;
 game.correctAnswers = 0;
 
 // METHODS
-game.startGame = function() {
-  console.log('game started');
-  // fetch the next question
+game.init = function() {
   // populate the question in the game container
+  console.log("populating questions");
+  game.populateQuestions();
+}
+game.startGame = function() {
+  
+  // fetch the next question
+  game.getNextQuestion();
+  console.log("Displaying next question");
+  game.displayQuestion();
+  
+  console.log('game started');
+  gameState = true;
 }
 
 game.getRandomIdx = function(array) {
@@ -119,9 +129,11 @@ game.displayResults = function() {
 }
 
 // EVENT LISTENERS
+game.handleStart = $('.game__button').on('click', game.startGame);
+
 game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
   $('.game__form button').prop('disabled', '')
-})
+});
 
 game.handleSubmit = $('.game__form').on('submit', function(evt) {
   evt.preventDefault();
@@ -166,13 +178,6 @@ game.handleSubmit = $('.game__form').on('submit', function(evt) {
 // DOCUMENT READY
 $(function() {
   console.log("document ready");
-
-  console.log("populating questions");
-  game.populateQuestions();
-
-  game.getNextQuestion();
-  console.log("Displaying next question");
-  game.displayQuestion();
+  game.init();
   
-  gameState = true;
 });
