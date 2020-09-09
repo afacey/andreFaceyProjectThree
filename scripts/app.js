@@ -5,7 +5,7 @@ game.gameState = false;
 game.players = players;
 game.questions = [];
 game.currentQuestion = [];
-game.questionMax = players.length;
+game.questionCount = players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
 
@@ -72,7 +72,7 @@ game.displayQuestion = function() {
   $('.game__playerImg').attr('src', question.imgSrc).attr('alt', 'Image of Toronto Raptors player to be guessed');
 
   // Display question count
-  $('.game__questionNumber').text(`${game.questionsAnswered + 1} / ${game.questionMax}`);
+  $('.game__questionNumber').text(`${game.questionsAnswered + 1} / ${game.questionCount}`);
   
   // Display name options
   $('.game__form label').each(function(idx) {
@@ -106,7 +106,7 @@ game.displayResults = function() {
         `
         <h2>Game Finished!</h2>
         <p class="game__result">
-        You got ${game.correctAnswers} / ${game.questionMax} correct!
+        You got ${game.correctAnswers} / ${game.questionCount} correct!
         </p>
         `;
   
@@ -143,7 +143,7 @@ game.handleSubmit = $('.game__form').on('submit', function(evt) {
     game.questionsAnswered++;
 
     // check if the amount of questions answered is the amount of questions in the game 
-    if (game.questionsAnswered === game.questionMax) {
+    if (game.questionsAnswered === game.questionCount) {
       console.log("game finished!")
   
       // if all the questions have been answered, display the results
