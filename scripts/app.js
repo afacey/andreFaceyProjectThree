@@ -95,6 +95,29 @@ game.getNextQuestion = function() {
   game.currentQuestion = game.questions.splice(randomIdx, 1)[0];
 }
 
+game.displayResults = function() {
+  // Set game state to off (false)
+  gameState = false;
+
+  // store .game__container div as a variable for use later
+  const gameContainer = $('.game__container');
+
+  const resultString = 
+        `
+        <h2>Game Finished!</h2>
+        <p class="game__result">
+        You got ${game.correctAnswers} / ${game.questionMax} correct!
+        </p>
+        `;
+  
+  // empty DOM elements in the gameContainer
+  gameContainer.empty();
+
+  // append the resultString in the gameContainer
+  gameContainer.append(resultString);
+
+}
+
 // EVENT LISTENERS
 game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
   $('.game__form button').prop('disabled', '')
@@ -119,9 +142,13 @@ game.handleSubmit = $('.game__form').on('submit', function(evt) {
     // Increment questionsAnswered counter
     game.questionsAnswered++;
 
+    // check if the amount of questions answered is the amount of questions in the game 
     if (game.questionsAnswered === game.questionMax) {
       console.log("game finished!")
-      gameState = false;
+  
+      // if all the questions have been answered, display the results
+      game.displayResults()
+      
     } else {
       // Get next question
       game.getNextQuestion();
@@ -130,9 +157,10 @@ game.handleSubmit = $('.game__form').on('submit', function(evt) {
     }
 
 
-  } else {
-    console.log('question must be answered to move forward')
   }
+  //  else {
+  //   console.log('question must be answered to move forward')
+  // }
 });
 
 // DOCUMENT READY
