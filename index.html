@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="./styles/style.css">
+  <title>Guess The Raptors Player!</title>
+</head>
+<body>
+  <main>
+    <div class="wrapper">
+      <h1>Guess The Raptors Player!</h1>
+      <p>Multiple choice matching game of the Toronto Raptors players</p>
+      <section class="game">
+        
+        <button class="game__button">Start Game</button>
+
+        <div class="game__container">
+          <div class="game__imgContainer">
+            <img src="./assets/kyleLowry.png" alt="Player" class="game__playerImg">
+          </div>
+
+          <h2>1 / 15</h2>
+
+          <form action="#" class="game__form">
+            <label for="player1">Player 1</label>
+            <input type="radio" name="player" id="player1">
+            
+            <label for="player2">Player 2</label>
+            <input type="radio" name="player" id="player2">
+            
+            <label for="player3">Player 3</label>
+            <input type="radio" name="player" id="player3">
+            
+            <label for="player4">Player 4</label>
+            <input type="radio" name="player" id="player4">
+            <button>Submit Answer</button>
+          </form>
+          
+        </div><!-- ./game__container-->
+  
+      </section><!-- ./game section -->
+    </div><!-- ./wrapper -->
+  </main>
+
+  <!-- JQuery -->
+  <script src='https://code.jquery.com/jquery-3.4.0.min.js' integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+  <!-- App JS -->
+  <script src="./scripts/players.js"></script>
+  <script src="./scripts/app.js"></script>
+</body>
+</html>

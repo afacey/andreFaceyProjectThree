@@ -1,0 +1,6 @@
+.DS_Store
+.vscode
+gulpfile.js
+package-lock.json
+planning
+node_modules
