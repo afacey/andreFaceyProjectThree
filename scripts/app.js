@@ -84,6 +84,8 @@ game.displayQuestion = function() {
 
     // Set input value to playerName
     $(`#${labelFor}`).attr('value', playerName);
+
+    $('.game__form button').attr('disabled', 'disabled');
   })
 }
 
@@ -94,11 +96,15 @@ game.getNextQuestion = function() {
 }
 
 // EVENT LISTENERS
-game.handleSubmit = $('form').on('submit', function(evt) {
+game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
+  $('.game__form button').prop('disabled', '')
+})
+
+game.handleSubmit = $('.game__form').on('submit', function(evt) {
   evt.preventDefault();
 
   // Get value of the selected answer
-  const userAnswer = $('form input[name="player"]:checked').val();
+  const userAnswer = $('.game__form input[name="player"]:checked').val();
   
   // If userAnswer has a value and its value is not "on"
   if (userAnswer && userAnswer !== "on") {
@@ -115,6 +121,7 @@ game.handleSubmit = $('form').on('submit', function(evt) {
 
     if (game.questionsAnswered === game.questionMax) {
       console.log("game finished!")
+      gameState = false;
     } else {
       // Get next question
       game.getNextQuestion();
@@ -138,4 +145,6 @@ $(function() {
   game.getNextQuestion();
   console.log("Displaying next question");
   game.displayQuestion();
+  
+  gameState = true;
 });
