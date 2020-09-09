@@ -4,10 +4,10 @@ const game = {};
 game.gameState = false;
 game.players = players;
 game.questions = [];
+game.questionCurrent = [];
 game.questionMax = players.length;
 game.questionsAnswered = 0;
 game.questionsCorrect = 0;
-
 // METHODS
 game.startGame = function() {
   console.log('game started');
@@ -59,9 +59,7 @@ game.populateQuestions = function() {
 }
 
 game.displayQuestion = function() {
-  const randomIdx = game.getRandomIdx(game.questions);
-  const question = game.questions[randomIdx];
-  
+  const question = game.questionCurrent;
   // Display player's image
   $('.game__playerImg').attr('src', question.imgSrc);
 
@@ -82,7 +80,9 @@ game.displayQuestion = function() {
 }
 
 game.getNextQuestion = function() {
+  const randomIdx = game.getRandomIdx(game.questions);
 
+  game.questionCurrent = game.questions.splice(randomIdx, 1)[0];
 }
 
 // EVENT LISTENERS
@@ -90,11 +90,12 @@ game.handleSubmit = $('form').on('submit', function(evt) {
   evt.preventDefault();
 
   // Get value of the selected answer
-  const answer = $('form input[name="player"]:checked').val();
+  const userAnswer = $('form input[name="player"]:checked').val();
   
-  // If answer has a value and its value is not "on"
-  if (answer && answer !== "on") {
-    console.log(answer);
+  // If userAnswer has a value and its value is not "on"
+  if (userAnswer && userAnswer !== "on") {
+    console.log('user answer:', userAnswer);
+    console.log('correct answer: ', game.questionCurrent.name)
     console.log('next question')
     
     // Remove checked property of selected answer
@@ -103,6 +104,8 @@ game.handleSubmit = $('form').on('submit', function(evt) {
     // Increment questionsAnswered counter
     game.questionsAnswered++;
 
+    // Get next question
+    game.getNextQuestion();
     // Display the next question
     game.displayQuestion();
 
@@ -118,6 +121,7 @@ $(function() {
   console.log("populating questions");
   game.populateQuestions();
 
+  game.getNextQuestion();
   console.log("Displaying next question");
   game.displayQuestion();
 });
