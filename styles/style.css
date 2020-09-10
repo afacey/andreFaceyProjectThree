@@ -260,7 +260,11 @@ header h1 {
     width: 100%;
     padding: 1rem;
     border: 4px solid #061922;
-    border-radius: 25px; }
+    border-radius: 25px;
+    transition: border-color .3s; }
+    .game__inputLabel:hover, .game__inputLabel:active {
+      cursor: pointer;
+      border-color: #b4975a; }
     .game__inputLabel::before {
       content: url(../assets/rapsIconRed.ico);
       margin-right: 10px; }
@@ -274,3 +278,9 @@ header h1 {
       cursor: not-allowed; }
     .game__button--submit:not(:disabled) {
       border-color: #ce1141; }
+  .game__resultContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .game__resultContainer > *:not(:last-child) {
+      margin-bottom: 2rem; }

@@ -212,32 +212,30 @@ game.displayResults = function() {
 
   const gameResultContainer = $('<div>').addClass('game__resultContainer');
 
-  // reset button for the user to play again
-  const resetButton = $('<button>').text('Play Again').addClass('game__button')
-                        // on click run the resetGame method
-                        .on('click', game.resetGame);
-
   // result string to display the user's score
-  let resultString = 
-        `
-        <h2 class="game__result--heading">Quiz Finished!</h2>
-        <p class="game__result--score">
-        You got ${game.correctAnswers} / ${game.questionCount} correct!
-        </p>
-        `;
-  
+  const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
+  const resultScore = $('<p>').addClass("game__result--heading").text(`You got ${game.correctAnswers} / ${game.questionCount} correct!`);
+  const highScore = $('<p>').addClass("game__result--highScore");
+
   if (game.correctAnswers > game.highScore) {
     game.highScore = game.correctAnswers;
-    resultString += (`New high score with ${game.correctAnswers} correct answer(s)!`);
+    highScore.text(`New high score with ${game.correctAnswers} correct answer(s)!`);
   } 
   else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
-    resultString += (`You tied the high score with ${game.correctAnswers} correct answer(s)!`);
+    highScore.text(`You tied the high score with ${game.correctAnswers} correct answer(s)!`);
   }
   else if (game.highScore !== 0) {
-    resultString += (`Current high score is ${game.highScore} correct answer(s)!`);
+    highScore.text(`Current high score is ${game.highScore} correct answer(s)!`);
+  }
+  else {
+    highScore.text(`No high score set yet!`);
   }
 
-  gameResultContainer.append(resultString, resetButton);
+  // reset button for the user to play again
+  // on click run the resetGame method
+  const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
+
+  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
