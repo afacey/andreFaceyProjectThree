@@ -1,11 +1,29 @@
+// player data
+const playerData = [
+  { name: "Chris Boucher", imgSrc: "../assets/chrisBoucher.png" },
+  { name: "Dewan Hernandez", imgSrc: "../assets/dewanHernandez.png"},
+  { name: "Fred VanVleet", imgSrc: "../assets/fredVanvleet.png"},
+  // { name: "Kyle Lowry", imgSrc: "../assets/kyleLowry.png" },
+  // { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
+  // { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
+  // { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
+  // { name: "OG Anunoby", imgSrc: "../assets/ogAnunoby.png" },
+  // { name: "Pascal Siakam", imgSrc: "../assets/pascalSiakam.png"},
+  // { name: "Patrick McCaw", imgSrc: "../assets/patrickMccaw.png" },
+  // { name: "Rondae Hollis-Jefferson", imgSrc: "../assets/rondaeHollisJefferson.png" },
+  // { name: "Serge Ibaka", imgSrc: "../assets/sergeIbaka.png" },
+  // { name: "Stanley Johnson", imgSrc: "../assets/stanleyJohnson.png" },
+  // { name: "Terence Davis", imgSrc: "../assets/terenceDavis.png"}
+]
+
 const game = {};
 
 // VARIABLES
 game.gameState = false;
-game.players = players;
+game.players = playerData;
 game.questions = [];
 game.currentQuestion = [];
-game.questionCount = players.length;
+game.questionCount = game.players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
 game.highScore = 0;
@@ -14,7 +32,7 @@ game.highScore = 0;
 game.numOfGuessNames =  4; // custom set number
 
 // check if players object has the same or more names in the list
-// if not then set number of names to the to player object length
+// if not then set number of names to the to the number of players in the object (length of player object)
 game.numOfGuessNames = game.players.length >= game.numOfGuessNames ? game.numOfGuessNames : game.players.length; 
 
 // METHODS
@@ -80,6 +98,7 @@ game.loadGameDOM = function() {
 
   // append four radio inputs and labels to the game form
   for (i = 1; i <= game.numOfGuessNames; i++) {
+    const formControl = `<div class="game__formControl>`
     const input = `<input type="radio" name="player" id="player${i}" />`;
     const label = `<label for="player${i}">Player ${i}</label>`;
 
@@ -188,9 +207,7 @@ game.displayResults = function() {
   const gameContainer = $('.game');
 
   // reset button for the user to play again
-  const resetButton = $('<button>')
-                        .text('Play Again')
-                        .addClass('game__button')
+  const resetButton = $('<button>').text('Play Again').addClass('game__button')
                         // on click run the resetGame method
                         .on('click', game.resetGame);
 
