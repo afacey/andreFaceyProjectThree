@@ -34,6 +34,17 @@ game.startGame = function() {
   gameState = true;
 }
 
+game.resetGame = function() {
+  // reset questions answered to 0
+  game.questionsAnswered = 0;
+
+  // call init method to populate questions array
+  game.init();
+
+  // call startGame method to reload the game DOM elements and display the next question
+  game.startGame();
+}
+
 game.loadGameDOM = function() {
   // div containing the game DOM elements
   const gameContainer = $('.game');
@@ -165,6 +176,14 @@ game.displayResults = function() {
   // store .game div as a variable for use later
   const gameContainer = $('.game');
 
+  // reset button for the user to play again
+  const resetButton = $('<button>')
+                        .text('Play Again')
+                        .addClass('game__button')
+                        // on click run the resetGame method
+                        .on('click', game.resetGame);
+
+  // result string to display the user's score
   const resultString = 
         `
         <h2>Game Finished!</h2>
@@ -177,7 +196,7 @@ game.displayResults = function() {
   gameContainer.empty();
 
   // append the resultString in the gameContainer
-  gameContainer.append(resultString);
+  gameContainer.append(resultString, resetButton);
 
 }
 
