@@ -8,6 +8,7 @@ game.currentQuestion = [];
 game.questionCount = players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
+game.highScore = 0;
 
 // METHODS
 game.init = function() {
@@ -37,6 +38,9 @@ game.startGame = function() {
 game.resetGame = function() {
   // reset questions answered to 0
   game.questionsAnswered = 0;
+
+  // reset questions answered correctly to 0
+  game.correctAnswers = 0;
 
   // call init method to populate questions array
   game.init();
@@ -184,13 +188,24 @@ game.displayResults = function() {
                         .on('click', game.resetGame);
 
   // result string to display the user's score
-  const resultString = 
+  let resultString = 
         `
         <h2>Game Finished!</h2>
         <p class="game__result">
         You got ${game.correctAnswers} / ${game.questionCount} correct!
         </p>
         `;
+  
+  if (game.correctAnswers > game.highScore) {
+    game.highScore = game.correctAnswers;
+    resultString += (`New high score with ${game.correctAnswers} correct answer(s)!`);
+  } 
+  else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
+    resultString += (`You tied the high score with ${game.correctAnswers} correct answer(s)!`);
+  }
+  else if (game.highScore !== 0) {
+    resultString += (`Current high score is ${game.highScore} correct answer(s)!`);
+  }
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
