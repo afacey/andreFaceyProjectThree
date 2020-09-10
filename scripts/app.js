@@ -36,9 +36,9 @@ game.startGame = function() {
 
 game.loadGameDOM = function() {
   // div containing the game DOM elements
-  const gameContainer = $('.game__container');
+  const gameContainer = $('.game');
 
-  // Empty contents of the .game__container div
+  // Empty contents of the .game div
   gameContainer.empty();
 
   // game image container
@@ -90,7 +90,7 @@ game.getRandomNames = function(notIdx) {
   // create an array to hold the player names
   const playerNames = [];
   
-  for (let i = 0; i < 3; i++) {
+  for (let i = 1; i <= 3; i++) {
     // get a random index of the functions players array
     const randomIdx = game.getRandomIdx(players);
     // push name of player at the random index of the players array
@@ -146,13 +146,15 @@ game.displayQuestion = function() {
     // Set input value to playerName
     $(`#${labelFor}`).attr('value', playerName);
 
+    // Set form button to disabled ... event listener enables button once player selects an answer
     $('.game__form button').attr('disabled', 'disabled');
   })
 }
 
 game.getNextQuestion = function() {
   const randomIdx = game.getRandomIdx(game.questions);
-
+  
+  // splice to remove question out of the pool, and store it as the next question
   game.currentQuestion = game.questions.splice(randomIdx, 1)[0];
 }
 
@@ -160,8 +162,8 @@ game.displayResults = function() {
   // Set game state to off (false)
   gameState = false;
 
-  // store .game__container div as a variable for use later
-  const gameContainer = $('.game__container');
+  // store .game div as a variable for use later
+  const gameContainer = $('.game');
 
   const resultString = 
         `
@@ -184,7 +186,6 @@ game.setGameEventListeners = function() {
 
   // check if a user has selected an answer to enable the form submit button
   game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
-    console.log('radio button change');
     $('.game__form button').prop('disabled', '')
   });
   
