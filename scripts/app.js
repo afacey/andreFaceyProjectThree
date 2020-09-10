@@ -10,6 +10,13 @@ game.questionsAnswered = 0;
 game.correctAnswers = 0;
 game.highScore = 0;
 
+// number of names the user can guess from
+game.numOfGuessNames =  5; // custom set number
+
+// check if players object has the same or more names in the list
+// if not then set number of names to the to player object length
+game.numOfGuessNames = game.players.length >= game.numOfGuessNames ? game.numOfGuessNames : game.players.length; 
+
 // METHODS
 game.init = function() {
   game.handleStart = $('.game__button').on('click', game.startGame);
@@ -42,8 +49,8 @@ game.resetGame = function() {
   // reset questions answered correctly to 0
   game.correctAnswers = 0;
 
-  // call init method to populate questions array
-  game.init();
+  // call populateQuestions method to populate questions array
+  game.populateQuestions();
 
   // call startGame method to reload the game DOM elements and display the next question
   game.startGame();
@@ -72,7 +79,7 @@ game.loadGameDOM = function() {
   const gameForm = $('<form>').addClass('game__form');
 
   // append four radio inputs and labels to the game form
-  for (i = 1; i <= 4; i++) {
+  for (i = 1; i <= game.numOfGuessNames; i++) {
     const input = `<input type="radio" name="player" id="player${i}" />`;
     const label = `<label for="player${i}">Player ${i}</label>`;
 
@@ -105,7 +112,7 @@ game.getRandomNames = function(notIdx) {
   // create an array to hold the player names
   const playerNames = [];
   
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i < game.numOfGuessNames; i++) {
     // get a random index of the functions players array
     const randomIdx = game.getRandomIdx(players);
     // push name of player at the random index of the players array

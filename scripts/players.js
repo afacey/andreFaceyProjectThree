@@ -14,15 +14,12 @@ const players = [
   {
     name: "Dewan Hernandez",
     imgSrc: "../assets/dewanHernandez.png"
-  }
-  // ,
+  },
+  {
+    name: "Malcolm Miller",
+    imgSrc: "../assets/malcolmMiller.png"
+  },
   // {
-  //   name: "Fred VanVleet",
-  //   imgSrc: "../assets/fredVanvleet.png"
-  // },{
-  //   name: "Malcolm Miller",
-  //   imgSrc: "../assets/malcolmMiller.png"
-  // },{
   //   name: "Matt Thomas",
   //   imgSrc: "../assets/mattThomas.png"
   // },{
