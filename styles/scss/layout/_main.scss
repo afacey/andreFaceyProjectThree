@@ -1,0 +1,33 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .imgContainer {
+    width: 260px;
+    margin: 0 auto;
+  }
+
+  &__rules {
+    margin: 3rem 0;
+  }
+
+  &__button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &__questionTracker {
+    padding: 1rem;
+
+    margin: 2rem auto;
+    border: 2px solid $color-accent;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: 20px 1fr 20px 1fr;
+    gap: 4rem;
+  }
+
+}

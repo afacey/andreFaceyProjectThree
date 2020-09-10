@@ -171,7 +171,7 @@ html {
 *, *:before, *:after {
   box-sizing: inherit; }
 
-.sr-only {
+.srOnly {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -183,7 +183,63 @@ html {
   clip: rect(0 0 0 0);
   overflow: hidden; }
 
+h1,
+h2,
+h3,
+p,
+a,
+label,
+input,
+button {
+  margin: 0;
+  padding: 0; }
+
+img {
+  width: 100%; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  font-size: 2rem; }
+
+h1 {
+  color: #061922;
+  font-size: 5rem; }
+
+.button {
+  padding: 30px 50px; }
+
 .wrapper {
   max-width: 1200px;
   width: 80%;
   margin: 0 auto; }
+
+body {
+  background-color: #EEE;
+  padding: 4rem 0; }
+
+header h1 {
+  text-align: center;
+  margin-bottom: 5rem; }
+
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .game .imgContainer {
+    width: 260px;
+    margin: 0 auto; }
+  .game__rules {
+    margin: 3rem 0; }
+  .game__button {
+    display: block;
+    margin: 0 auto; }
+  .game__questionTracker {
+    padding: 1rem;
+    margin: 2rem auto;
+    border: 2px solid #b4975a; }
+  .game__form {
+    display: grid;
+    grid-template-columns: 20px 1fr 20px 1fr;
+    gap: 4rem; }

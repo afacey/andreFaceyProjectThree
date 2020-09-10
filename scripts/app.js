@@ -11,7 +11,7 @@ game.correctAnswers = 0;
 game.highScore = 0;
 
 // number of names the user can guess from
-game.numOfGuessNames =  5; // custom set number
+game.numOfGuessNames =  4; // custom set number
 
 // check if players object has the same or more names in the list
 // if not then set number of names to the to player object length
@@ -64,7 +64,7 @@ game.loadGameDOM = function() {
   gameContainer.empty();
 
   // game image container
-  const imgContainer = $('<div>').addClass('game__imgContainer');
+  const imgContainer = $('<div>').addClass('imgContainer');
   // game player image
   const gamePlayerImg = $('<img>').addClass('game__playerImg')
             .attr('alt', 'Toronto Raptors player to be guessed by the user');
@@ -274,7 +274,6 @@ game.setGameEventListeners = function() {
 
 // DOCUMENT READY
 $(function() {
-  console.log("document ready");
   game.init();
   
 });

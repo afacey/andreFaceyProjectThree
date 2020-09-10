@@ -1,5 +1,9 @@
+// ABSTRACTS
+@import './abstracts/variables';
+
 // BASE
 @import './base/setup';
+@import './base/typography';
 
 // COMPONENTS
 @import './components/button';
@@ -7,3 +11,6 @@
 
 // LAYOUT
 @import './layout/wrapper';
+@import './layout/body';
+@import './layout/header';
+@import './layout/main';
