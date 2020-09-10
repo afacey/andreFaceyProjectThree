@@ -1,4 +1,5 @@
 // player data
+// images taken from https://www.nba.com/raptors/roster
 const playerData = [
   { name: "Chris Boucher", imgSrc: "../assets/chrisBoucher.png" },
   { name: "Dewan Hernandez", imgSrc: "../assets/dewanHernandez.png"},
@@ -286,11 +287,7 @@ game.setGameEventListeners = function() {
         game.displayQuestion();
       }
   
-  
     }
-    //  else {
-    //   console.log('question must be answered to move forward')
-    // }
   });
 }
 
