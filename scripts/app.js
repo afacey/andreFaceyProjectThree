@@ -11,19 +11,67 @@ game.correctAnswers = 0;
 
 // METHODS
 game.init = function() {
+  game.handleStart = $('.game__button').on('click', game.startGame);
   // populate the question in the game container
   console.log("populating questions");
   game.populateQuestions();
 }
+
 game.startGame = function() {
   
   // fetch the next question
   game.getNextQuestion();
+
+  game.loadGameDOM();
+
   console.log("Displaying next question");
   game.displayQuestion();
   
-  console.log('game started');
+  // Set Game DOM Event Listeners
+  game.setGameEventListeners();
+
+  // Start Game
   gameState = true;
+}
+
+game.loadGameDOM = function() {
+  // div containing the game DOM elements
+  const gameContainer = $('.game__container');
+
+  // Empty contents of the .game__container div
+  gameContainer.empty();
+
+  // game image container
+  const imgContainer = $('<div>').addClass('game__imgContainer');
+  // game player image
+  const gamePlayerImg = $('<img>').addClass('game__playerImg')
+            .attr('alt', 'Toronto Raptors player to be guessed by the user');
+  
+  // append game player image to the image container
+  imgContainer.append(gamePlayerImg);
+
+  // question tracker ... ex. "3 / 14"
+  const questionTracker = $('<h3>').addClass('game__questionTracker');
+
+  // game form containing the radio inputs and labels, and submit button
+  const gameForm = $('<form>').addClass('game__form');
+
+  // append four radio inputs and labels to the game form
+  for (i = 1; i <= 4; i++) {
+    const input = `<input type="radio" name="player" id="player${i}" />`;
+    const label = `<label for="player${i}">Player ${i}</label>`;
+
+    gameForm.append(input, label);
+  }
+
+  // game form submit button
+  const gameFormButton = $('<button>').text('Submit Answer').attr('disabled', 'disabled');
+
+  // append submit button to the game form
+  gameForm.append(gameFormButton);
+
+  // append the image container, question tracker, and game form to the game container
+  gameContainer.append(imgContainer, questionTracker, gameForm);
 }
 
 game.getRandomIdx = function(array) {
@@ -79,11 +127,14 @@ game.populateQuestions = function() {
 game.displayQuestion = function() {
   const question = game.currentQuestion;
   // Display player's image
-  $('.game__playerImg').attr('src', question.imgSrc).attr('alt', 'Image of Toronto Raptors player to be guessed');
+  $('.game__playerImg').attr('src', question.imgSrc);
 
   // Display question count
-  $('.game__questionNumber').text(`${game.questionsAnswered + 1} / ${game.questionCount}`);
+  $('.game__questionTracker').text(`${game.questionsAnswered + 1} / ${game.questionCount}`);
   
+  // Remove checked property from previously selected answer
+  $('.game__form input[name="player"]:checked').prop("checked", false);
+
   // Display name options
   $('.game__form label').each(function(idx) {
     const playerName = question.gameNames[idx];
@@ -128,52 +179,56 @@ game.displayResults = function() {
 
 }
 
-// EVENT LISTENERS
-game.handleStart = $('.game__button').on('click', game.startGame);
+// Setup the event listeners for the game DOM elements after they have been loaded
+game.setGameEventListeners = function() {
 
-game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
-  $('.game__form button').prop('disabled', '')
-});
-
-game.handleSubmit = $('.game__form').on('submit', function(evt) {
-  evt.preventDefault();
-
-  // Get value of the selected answer
-  const userAnswer = $('.game__form input[name="player"]:checked').val();
+  // check if a user has selected an answer to enable the form submit button
+  game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
+    console.log('radio button change');
+    $('.game__form button').prop('disabled', '')
+  });
   
-  // If userAnswer has a value and its value is not "on"
-  if (userAnswer && userAnswer !== "on") {
-    console.log('user answer:', userAnswer);
-    console.log('correct answer: ', game.currentQuestion.name)
-    userAnswer === game.currentQuestion.name && game.correctAnswers++;
-    console.log('next question')
-    
-    // Remove checked property of selected answer
-    $('.game__form input[name="player"]:checked').prop("checked", false);
-    
-    // Increment questionsAnswered counter
-    game.questionsAnswered++;
-
-    // check if the amount of questions answered is the amount of questions in the game 
-    if (game.questionsAnswered === game.questionCount) {
-      console.log("game finished!")
+  // check the user's answer against correct answer
+  // check if all the questions have been answered, if not display the next question
+  game.handleSubmit = $('.game__form').on('submit', function(evt) {
+    evt.preventDefault();
   
-      // if all the questions have been answered, display the results
-      game.displayResults()
+    // Get value of the selected answer
+    const userAnswer = $('.game__form input[name="player"]:checked').val();
+    
+    // If userAnswer has a value and its value is not "on"
+    if (userAnswer && userAnswer !== "on") {
+      console.log('user answer:', userAnswer);
+      console.log('correct answer: ', game.currentQuestion.name)
+
+      // Increment game.correctAnswers if the player answered correctly
+      userAnswer === game.currentQuestion.name && game.correctAnswers++;
       
-    } else {
-      // Get next question
-      game.getNextQuestion();
-      // Display the next question
-      game.displayQuestion();
+      // Increment questionsAnswered counter
+      game.questionsAnswered++;
+  
+      // check if the amount of questions answered is the amount of questions in the game 
+      if (game.questionsAnswered === game.questionCount) {
+        console.log("game finished!")
+    
+        // if all the questions have been answered, display the results
+        game.displayResults()
+        
+      } else {
+        // Get next question
+        game.getNextQuestion();
+        // Display the next question
+        game.displayQuestion();
+      }
+  
+  
     }
+    //  else {
+    //   console.log('question must be answered to move forward')
+    // }
+  });
+}
 
-
-  }
-  //  else {
-  //   console.log('question must be answered to move forward')
-  // }
-});
 
 // DOCUMENT READY
 $(function() {
