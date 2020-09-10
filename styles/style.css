@@ -195,6 +195,7 @@ button {
   padding: 0; }
 
 img {
+  display: block;
   width: 100%; }
 
 html {
@@ -207,8 +208,15 @@ h1 {
   color: #061922;
   font-size: 5rem; }
 
-.button {
-  padding: 30px 50px; }
+.game__button {
+  padding: 1rem 2.5rem;
+  border: 3px solid #ce1141;
+  border-radius: 25px;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s; }
+  .game__button:hover, .game__button:active, .game__button:focus {
+    background-color: #061922;
+    color: #fff; }
 
 .wrapper {
   max-width: 1200px;
@@ -228,7 +236,7 @@ header h1 {
   flex-direction: column;
   align-items: center; }
   .game .imgContainer {
-    width: 260px;
+    max-width: 260px;
     margin: 0 auto; }
   .game__rules {
     margin: 3rem 0; }
@@ -237,9 +245,32 @@ header h1 {
     margin: 0 auto; }
   .game__questionTracker {
     padding: 1rem;
-    margin: 2rem auto;
-    border: 2px solid #b4975a; }
-  .game__form {
+    margin: 2rem auto; }
+  .game .gridContainer {
     display: grid;
-    grid-template-columns: 20px 1fr 20px 1fr;
-    gap: 4rem; }
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 4rem; }
+  .game__formControl {
+    width: 100%; }
+  .game__input:checked + .game__inputLabel {
+    border: 4px solid #ce1141; }
+  .game__inputLabel {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem;
+    border: 4px solid #061922;
+    border-radius: 25px; }
+    .game__inputLabel::before {
+      content: url(../assets/rapsIconRed.ico);
+      margin-right: 10px; }
+  .game__button--submit {
+    display: block;
+    margin: 0 auto; }
+    .game__button--submit:disabled, .game__button--submit:disabled:hover {
+      border-color: #a1a1a4;
+      background-color: unset;
+      color: #a1a1a4;
+      cursor: not-allowed; }
+    .game__button--submit:not(:disabled) {
+      border-color: #ce1141; }

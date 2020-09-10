@@ -3,7 +3,7 @@ const playerData = [
   { name: "Chris Boucher", imgSrc: "../assets/chrisBoucher.png" },
   { name: "Dewan Hernandez", imgSrc: "../assets/dewanHernandez.png"},
   { name: "Fred VanVleet", imgSrc: "../assets/fredVanvleet.png"},
-  // { name: "Kyle Lowry", imgSrc: "../assets/kyleLowry.png" },
+  { name: "Kyle Lowry", imgSrc: "../assets/kyleLowry.png" },
   // { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
   // { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
   // { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
@@ -18,7 +18,7 @@ const playerData = [
 
 const game = {};
 
-// VARIABLES
+// ===================================================== VARIABLES
 game.gameState = false;
 game.players = playerData;
 game.questions = [];
@@ -35,7 +35,7 @@ game.numOfGuessNames =  4; // custom set number
 // if not then set number of names to the to the number of players in the object (length of player object)
 game.numOfGuessNames = game.players.length >= game.numOfGuessNames ? game.numOfGuessNames : game.players.length; 
 
-// METHODS
+// ===================================================== METHODS
 game.init = function() {
   game.handleStart = $('.game__button').on('click', game.startGame);
   // populate the question in the game container
@@ -95,21 +95,25 @@ game.loadGameDOM = function() {
 
   // game form containing the radio inputs and labels, and submit button
   const gameForm = $('<form>').addClass('game__form');
+  const gridContainer = $('<div>').addClass('gridContainer');
 
   // append four radio inputs and labels to the game form
   for (i = 1; i <= game.numOfGuessNames; i++) {
-    const formControl = `<div class="game__formControl>`
-    const input = `<input type="radio" name="player" id="player${i}" />`;
-    const label = `<label for="player${i}">Player ${i}</label>`;
+    const formControl = `
+      <div class="game__formControl">
+        <input class="game__input srOnly" type="radio" name="player" id="player${i}" />
+        <label class="game__inputLabel" for="player${i}">Player ${i}</label>
+      </div>
+      `;
 
-    gameForm.append(input, label);
+    gridContainer.append(formControl);
   }
 
   // game form submit button
-  const gameFormButton = $('<button>').text('Submit Answer').attr('disabled', 'disabled');
+  const gameFormButton = $('<button>').addClass('game__button game__button--submit').text('Submit Answer').attr('disabled', 'disabled');
 
   // append submit button to the game form
-  gameForm.append(gameFormButton);
+  gameForm.append(gridContainer, gameFormButton);
 
   // append the image container, question tracker, and game form to the game container
   gameContainer.append(imgContainer, questionTracker, gameForm);
@@ -171,7 +175,7 @@ game.displayQuestion = function() {
   $('.game__playerImg').attr('src', question.imgSrc);
 
   // Display question count
-  $('.game__questionTracker').text(`${game.questionsAnswered + 1} / ${game.questionCount}`);
+  $('.game__questionTracker').text(`Question ${game.questionsAnswered + 1} / ${game.questionCount}`);
   
   // Remove checked property from previously selected answer
   $('.game__form input[name="player"]:checked').prop("checked", false);
@@ -206,6 +210,8 @@ game.displayResults = function() {
   // store .game div as a variable for use later
   const gameContainer = $('.game');
 
+  const gameResultContainer = $('<div>').addClass('game__resultContainer');
+
   // reset button for the user to play again
   const resetButton = $('<button>').text('Play Again').addClass('game__button')
                         // on click run the resetGame method
@@ -214,8 +220,8 @@ game.displayResults = function() {
   // result string to display the user's score
   let resultString = 
         `
-        <h2>Game Finished!</h2>
-        <p class="game__result">
+        <h2 class="game__result--heading">Quiz Finished!</h2>
+        <p class="game__result--score">
         You got ${game.correctAnswers} / ${game.questionCount} correct!
         </p>
         `;
@@ -230,12 +236,14 @@ game.displayResults = function() {
   else if (game.highScore !== 0) {
     resultString += (`Current high score is ${game.highScore} correct answer(s)!`);
   }
+
+  gameResultContainer.append(resultString, resetButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
 
   // append the resultString in the gameContainer
-  gameContainer.append(resultString, resetButton);
+  gameContainer.append(gameResultContainer);
 
 }
 
@@ -289,7 +297,7 @@ game.setGameEventListeners = function() {
 }
 
 
-// DOCUMENT READY
+// ===================================================== DOCUMENT READY
 $(function() {
   game.init();
   

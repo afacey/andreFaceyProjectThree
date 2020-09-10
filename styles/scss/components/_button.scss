@@ -1,3 +1,16 @@
-.button {
-  padding: 30px 50px;
+.game__button {
+  padding: 1rem 2.5rem;
+  border: 3px solid $color-primary;
+  border-radius: 25px;
+
+  text-transform: uppercase;
+
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: $color-dark;
+    color: #fff;
+  }
 }
