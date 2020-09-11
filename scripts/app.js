@@ -5,18 +5,18 @@ const playerData = [
   { name: "Dewan Hernandez", imgSrc: "../assets/dewanHernandez.png"},
   { name: "Fred VanVleet", imgSrc: "../assets/fredVanvleet.png"},
   { name: "Kyle Lowry", imgSrc: "../assets/kyleLowry.png" },
-  { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
-  { name: "Marc Gasol", imgSrc: "../assets/marcGasol.png" },
-  { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
-  { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
-  { name: "OG Anunoby", imgSrc: "../assets/ogAnunoby.png" },
-  { name: "Oshae Brissett", imgSrc: "../assets/oshaeBrissett.png" },
-  { name: "Pascal Siakam", imgSrc: "../assets/pascalSiakam.png"},
-  { name: "Patrick McCaw", imgSrc: "../assets/patrickMccaw.png" },
-  { name: "Rondae Hollis-Jefferson", imgSrc: "../assets/rondaeHollisJefferson.png" },
-  { name: "Serge Ibaka", imgSrc: "../assets/sergeIbaka.png" },
-  { name: "Stanley Johnson", imgSrc: "../assets/stanleyJohnson.png" },
-  { name: "Terence Davis", imgSrc: "../assets/terenceDavis.png"}
+  // { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
+  // { name: "Marc Gasol", imgSrc: "../assets/marcGasol.png" },
+  // { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
+  // { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
+  // { name: "OG Anunoby", imgSrc: "../assets/ogAnunoby.png" },
+  // { name: "Oshae Brissett", imgSrc: "../assets/oshaeBrissett.png" },
+  // { name: "Pascal Siakam", imgSrc: "../assets/pascalSiakam.png"},
+  // { name: "Patrick McCaw", imgSrc: "../assets/patrickMccaw.png" },
+  // { name: "Rondae Hollis-Jefferson", imgSrc: "../assets/rondaeHollisJefferson.png" },
+  // { name: "Serge Ibaka", imgSrc: "../assets/sergeIbaka.png" },
+  // { name: "Stanley Johnson", imgSrc: "../assets/stanleyJohnson.png" },
+  // { name: "Terence Davis", imgSrc: "../assets/terenceDavis.png"}
 ]
 
 const game = {};
@@ -39,44 +39,9 @@ game.numOfGuessNames =  4; // custom set number
 game.numOfGuessNames = game.players.length >= game.numOfGuessNames ? game.numOfGuessNames : game.players.length; 
 
 // ===================================================== METHODS
-game.init = function() {
-  game.handleStart = $('.game__button').on('click', game.startGame);
-  // populate the question in the game container
-  console.log("populating questions");
-  game.populateQuestions();
-}
 
-game.startGame = function() {
-  
-  // fetch the next question
-  game.getNextQuestion();
 
-  game.loadGameDOM();
-
-  console.log("Displaying next question");
-  game.displayQuestion();
-  
-  // Set Game DOM Event Listeners
-  game.setGameEventListeners();
-
-  // Start Game
-  gameState = true;
-}
-
-game.resetGame = function() {
-  // reset questions answered to 0
-  game.questionsAnswered = 0;
-
-  // reset questions answered correctly to 0
-  game.correctAnswers = 0;
-
-  // call populateQuestions method to populate questions array
-  game.populateQuestions();
-
-  // call startGame method to reload the game DOM elements and display the next question
-  game.startGame();
-}
-
+// ------------------------- game.loadGameDOM -------------------------
 game.loadGameDOM = function() {
   // div containing the game DOM elements
   const gameContainer = $('.game');
@@ -122,12 +87,13 @@ game.loadGameDOM = function() {
   gameContainer.append(imgContainer, questionTracker, gameForm);
 }
 
+// ------------------------- game.getRandomIdx -------------------------
 game.getRandomIdx = function(array) {
   const idx = Math.floor(Math.random() * array.length);
   return idx;
 }
 
-
+// ------------------------- game.getRandomNames -------------------------
 game.getRandomNames = function(notIdx) {
   // make a copy of the players array
   const players = game.players.slice();
@@ -157,6 +123,7 @@ game.getRandomNames = function(notIdx) {
   return playerNames; 
 }
 
+// ------------------------- game.populateQuestions -------------------------
 game.populateQuestions = function() {
   // make a copy of the players array
   const questions = game.players.slice();
@@ -172,6 +139,7 @@ game.populateQuestions = function() {
   game.questions = questions;
 }
 
+// ------------------------- game.displayQuestion -------------------------
 game.displayQuestion = function() {
   const question = game.currentQuestion;
   // Display player's image
@@ -199,6 +167,7 @@ game.displayQuestion = function() {
   })
 }
 
+// ------------------------- game.getNextQuestion -------------------------
 game.getNextQuestion = function() {
   const randomIdx = game.getRandomIdx(game.questions);
   
@@ -206,6 +175,7 @@ game.getNextQuestion = function() {
   game.currentQuestion = game.questions.splice(randomIdx, 1)[0];
 }
 
+// ------------------------- game.displayResults -------------------------
 game.displayResults = function() {
   // Set game state to off (false)
   gameState = false;
@@ -217,7 +187,7 @@ game.displayResults = function() {
 
   // result string to display the user's score
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
-  const resultScore = $('<p>').addClass("game__result--heading").html(`You got <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
+  const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
   const highScore = $('<p>').addClass("game__result--highScore");
 
   if (game.correctAnswers > game.highScore) {
@@ -250,6 +220,8 @@ game.displayResults = function() {
   gameContainer.append(gameResultContainer);
 
 }
+
+// ------------------------- game.setGameEventListeners -------------------------
 
 // Setup the event listeners for the game DOM elements after they have been loaded
 game.setGameEventListeners = function() {
@@ -293,6 +265,7 @@ game.setGameEventListeners = function() {
   });
 }
 
+// ------------------------- game.loadStartingDOM -------------------------
 game.loadStartingDOM = function() {
   // div containing the game DOM elements
   const gameContainer = $('.game');
@@ -310,11 +283,11 @@ game.loadStartingDOM = function() {
 
   // .game__rules div
   const gameRulesContainer = $('<div>').addClass('game__rules');
-  const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the Toronto Raptors!")
+  const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the 2019-2020 Toronto Raptors!")
   const gameRulesList = $('<ol>').addClass('game__rulesList');
-  const gameRulesListItems = `<li class="game__rulesListItem">Each question presents an image of a player, with 4 player names to guess from</li>
+  const gameRulesListItems = `<li class="game__rulesListItem">Each question presents an image of a player, with 4 player names to choose from</li>
   <li class="game__rulesListItem">Select the player's name, and submit your answer to move on to the next question</li>
-  <li class="game__rulesListItem">Get started by clicking the Start Quiz button below!</li>`;
+  <li class="game__rulesListItem">Get started by clicking the <em>Start Quiz</em> button below!</li>`;
 
   gameRulesList.html(gameRulesListItems);
 
@@ -324,6 +297,47 @@ game.loadStartingDOM = function() {
   gameRulesContainer.append(gameRulesHeadline, gameRulesList);
 
   gameContainer.append(imgContainer, gameRulesContainer, startButton);
+}
+
+// ------------------------- game.startGame -------------------------
+game.startGame = function() {
+  
+  // fetch the next question
+  game.getNextQuestion();
+
+  game.loadGameDOM();
+
+  console.log("Displaying next question");
+  game.displayQuestion();
+  
+  // Set Game DOM Event Listeners
+  game.setGameEventListeners();
+
+  // Start Game
+  gameState = true;
+}
+
+// ------------------------- game.resetGame -------------------------
+game.resetGame = function() {
+  // reset questions answered to 0
+  game.questionsAnswered = 0;
+
+  // reset questions answered correctly to 0
+  game.correctAnswers = 0;
+
+  // call populateQuestions method to populate questions array
+  game.populateQuestions();
+
+  // call startGame method to reload the game DOM elements and display the next question
+  game.startGame();
+}
+
+// ------------------------- game.init -------------------------
+game.init = function() {
+  game.handleStart = $('.game__button').on('click', game.startGame);
+  // populate the question in the game container
+  console.log("populating questions");
+  game.populateQuestions();
 }
 
 // ===================================================== DOCUMENT READY

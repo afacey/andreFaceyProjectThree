@@ -194,6 +194,10 @@ button {
   margin: 0;
   padding: 0; }
 
+a {
+  color: inherit;
+  text-decoration: none; }
+
 img {
   display: block;
   width: 100%; }
@@ -221,6 +225,7 @@ h1 {
 
 .game__button {
   font-family: inherit;
+  background-color: inherit;
   padding: 1rem 2.5rem;
   border: 3px solid #ce1141;
   border-radius: 25px;
@@ -236,20 +241,24 @@ h1 {
   margin: 0 auto; }
 
 body {
-  background-color: #EEE;
-  padding-top: 4rem; }
+  background-color: #EEE; }
+  body .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; }
 
-@media (max-width: 480px) {
-  body {
-    padding: 2rem 0; } }
-
-header h1 {
-  text-align: center;
-  margin-bottom: 3rem; }
-
-@media (max-width: 480px) {
+header {
+  padding: 2rem 0; }
   header h1 {
-    margin-bottom: 1rem; } }
+    text-align: center; }
+
+@media (max-width: 480px) {
+  header {
+    padding-bottom: 1rem; } }
+
+main {
+  flex: 1; }
 
 .game {
   display: flex;
@@ -279,7 +288,7 @@ header h1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
-    margin-bottom: 4rem; }
+    margin-bottom: 2.5rem; }
   .game__formControl {
     width: 100%; }
   .game__input:checked + .game__inputLabel {
@@ -327,3 +336,17 @@ header h1 {
     grid-template-columns: 1fr;
     gap: 1.5rem;
     margin-bottom: 1.5rem; } }
+
+footer {
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 3rem 0; }
+  footer p:not(:last-of-type) {
+    margin-bottom: 1rem; }
+  footer a {
+    color: #ce1141;
+    text-decoration: underline;
+    padding: 1rem;
+    transition: color 0.3s; }
+    footer a:hover, footer a:active, footer a:focus {
+      color: #b4975a; }
