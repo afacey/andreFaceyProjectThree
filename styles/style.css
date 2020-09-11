@@ -259,7 +259,12 @@ header h1 {
     max-width: 260px;
     margin: 0 auto; }
   .game__rules {
-    margin: 3rem 0; }
+    margin: 2rem 0; }
+    .game__rulesParagraph {
+      margin-bottom: 1rem;
+      text-align: center; }
+    .game__rulesListItem:not(:last-of-type) {
+      margin-bottom: 1rem; }
   .game__button {
     display: block;
     margin: 0 auto; }
@@ -293,11 +298,11 @@ header h1 {
     margin: 0 auto; }
     .game__button--submit:disabled, .game__button--submit:disabled:hover {
       border-color: #a1a1a4;
-      background-color: unset;
+      background-color: inherit;
       color: #a1a1a4;
       cursor: not-allowed; }
     .game__button--submit:not(:disabled) {
-      border-color: #ce1141; }
+      border-color: #b4975a; }
   .game__resultContainer {
     display: flex;
     flex-direction: column;
