@@ -215,21 +215,21 @@ game.displayResults = function() {
 
   // result string to display the user's score
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
-  const resultScore = $('<p>').addClass("game__result--heading").text(`You got ${game.correctAnswers} / ${game.questionCount} correct!`);
+  const resultScore = $('<p>').addClass("game__result--heading").html(`You got <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
   const highScore = $('<p>').addClass("game__result--highScore");
 
   if (game.correctAnswers > game.highScore) {
     game.highScore = game.correctAnswers;
-    highScore.text(`New high score with ${game.correctAnswers} correct answer(s)!`);
+    highScore.text(`New high score with ${game.correctAnswers} correct player(s)!`);
   } 
   else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
-    highScore.text(`You tied the high score with ${game.correctAnswers} correct answer(s)!`);
+    highScore.text(`You tied the high score with ${game.correctAnswers} correct player(s)!`);
   }
   else if (game.highScore !== 0) {
-    highScore.text(`Current high score is ${game.highScore} correct answer(s)!`);
+    highScore.text(`Current high score is ${game.highScore} correct player(s)!`);
   }
   else {
-    highScore.text(`No high score set yet!`);
+    highScore.text(`No high score has been set yet!`);
   }
 
   // reset button for the user to play again

@@ -1,4 +1,8 @@
 body {
   background-color: #EEE;
-  padding: 4rem 0;
+  padding-top: 4rem;
+}
+
+@media (max-width: 480px) {
+  body { padding: 2rem 0; }
 }
