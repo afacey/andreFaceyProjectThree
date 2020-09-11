@@ -232,11 +232,14 @@ game.displayResults = function() {
     highScore.text(`No high score has been set yet!`);
   }
 
+  // button to go to the start screen
+  const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
+  
   // reset button for the user to play again
   // on click run the resetGame method
   const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
 
-  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton);
+  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton, startScreenButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
@@ -291,6 +294,37 @@ game.setGameEventListeners = function() {
   });
 }
 
+game.loadStartingDOM = function() {
+  // div containing the game DOM elements
+  const gameContainer = $('.game');
+
+  // Empty contents of the .game div
+  gameContainer.empty();
+
+  // game image container
+  const imgContainer = $('<div>').addClass('imgContainer');
+  // game player image
+  const teamLogoImg = $('<img>').addClass('game__teamLogo').attr('src', './assets/raptorsLogo.png').attr('alt', 'Logo of the Toronto Raptors NBA team');
+  
+  // append game player image to the image container
+  imgContainer.append(teamLogoImg);
+
+  // .game__rules div
+  const gameRulesContainer = $('<div>').addClass('game__rules');
+  const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the Toronto Raptors!")
+  const gameRulesList = $('<ol>').addClass('game__rulesList');
+  const gameRulesListItems = `<li class="game__rulesListItem">Each question presents an image of a player, with 4 player names to guess from</li>
+  <li class="game__rulesListItem">Select the player's name, and submit your answer to move on to the next player</li>
+  <li class="game__rulesListItem">Get started by clicking the Start Quiz button below!</li>`;
+
+  gameRulesList.html(gameRulesListItems);
+
+  const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.resetGame);
+
+  gameRulesContainer.append(gameRulesHeadline, gameRulesList);
+
+  gameContainer.append(imgContainer, gameRulesContainer, startButton);
+}
 
 // ===================================================== DOCUMENT READY
 $(function() {
