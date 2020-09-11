@@ -282,7 +282,6 @@ main {
     display: block;
     margin: 0 auto; }
   .game__questionTracker {
-    padding: 1rem;
     margin: 2rem auto; }
   .game .gridContainer {
     display: grid;
@@ -340,7 +339,7 @@ main {
 footer {
   font-size: 1.4rem;
   text-align: center;
-  padding: 3rem 0; }
+  padding: 2rem 0; }
   footer p:not(:last-of-type) {
     margin-bottom: 1rem; }
   footer a {

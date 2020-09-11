@@ -276,6 +276,7 @@ game.loadStartingDOM = function() {
   // game image container
   const imgContainer = $('<div>').addClass('imgContainer');
   // game player image
+  // Image of the logo taken from https://1000logos.net/toronto-raptors-logo/
   const teamLogoImg = $('<img>').addClass('game__teamLogo').attr('src', './assets/raptorsLogo.png').attr('alt', 'Logo of the Toronto Raptors NBA team');
   
   // append game player image to the image container
@@ -338,6 +339,8 @@ game.init = function() {
   // populate the question in the game container
   console.log("populating questions");
   game.populateQuestions();
+
+  game.loadStartingDOM();
 }
 
 // ===================================================== DOCUMENT READY
