@@ -5,16 +5,16 @@ const playerData = [
   { name: "Dewan Hernandez", imgSrc: "../assets/dewanHernandez.png"},
   { name: "Fred VanVleet", imgSrc: "../assets/fredVanvleet.png"},
   { name: "Kyle Lowry", imgSrc: "../assets/kyleLowry.png" },
-  // { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
-  // { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
-  // { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
-  // { name: "OG Anunoby", imgSrc: "../assets/ogAnunoby.png" },
-  // { name: "Pascal Siakam", imgSrc: "../assets/pascalSiakam.png"},
-  // { name: "Patrick McCaw", imgSrc: "../assets/patrickMccaw.png" },
-  // { name: "Rondae Hollis-Jefferson", imgSrc: "../assets/rondaeHollisJefferson.png" },
-  // { name: "Serge Ibaka", imgSrc: "../assets/sergeIbaka.png" },
-  // { name: "Stanley Johnson", imgSrc: "../assets/stanleyJohnson.png" },
-  // { name: "Terence Davis", imgSrc: "../assets/terenceDavis.png"}
+  { name: "Malcolm Miller", imgSrc: "../assets/malcolmMiller.png" },
+  { name: "Matt Thomas", imgSrc: "../assets/mattThomas.png" },
+  { name: "Norman Powell", imgSrc: "../assets/normanPowell.png"},
+  { name: "OG Anunoby", imgSrc: "../assets/ogAnunoby.png" },
+  { name: "Pascal Siakam", imgSrc: "../assets/pascalSiakam.png"},
+  { name: "Patrick McCaw", imgSrc: "../assets/patrickMccaw.png" },
+  { name: "Rondae Hollis-Jefferson", imgSrc: "../assets/rondaeHollisJefferson.png" },
+  { name: "Serge Ibaka", imgSrc: "../assets/sergeIbaka.png" },
+  { name: "Stanley Johnson", imgSrc: "../assets/stanleyJohnson.png" },
+  { name: "Terence Davis", imgSrc: "../assets/terenceDavis.png"}
 ]
 
 const game = {};
@@ -267,9 +267,6 @@ game.setGameEventListeners = function() {
     
     // If userAnswer has a value and its value is not "on"
     if (userAnswer && userAnswer !== "on") {
-      console.log('user answer:', userAnswer);
-      console.log('correct answer: ', game.currentQuestion.name)
-
       // Increment game.correctAnswers if the player answered correctly
       userAnswer === game.currentQuestion.name && game.correctAnswers++;
       
@@ -314,10 +311,11 @@ game.loadStartingDOM = function() {
   const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the Toronto Raptors!")
   const gameRulesList = $('<ol>').addClass('game__rulesList');
   const gameRulesListItems = `<li class="game__rulesListItem">Each question presents an image of a player, with 4 player names to guess from</li>
-  <li class="game__rulesListItem">Select the player's name, and submit your answer to move on to the next player</li>
+  <li class="game__rulesListItem">Select the player's name, and submit your answer to move on to the next question</li>
   <li class="game__rulesListItem">Get started by clicking the Start Quiz button below!</li>`;
 
   gameRulesList.html(gameRulesListItems);
+
 
   const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.resetGame);
 
