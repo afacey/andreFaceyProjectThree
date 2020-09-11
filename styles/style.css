@@ -323,6 +323,8 @@ main {
     text-align: center; }
     .game__resultContainer > *:not(:last-child) {
       margin-bottom: 2rem; }
+  .game__result--heading {
+    font-size: 2.2rem; }
 
 @media (max-width: 480px) {
   .game__teamLogo {

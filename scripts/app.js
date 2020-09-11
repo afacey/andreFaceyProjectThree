@@ -21,6 +21,15 @@ const playerData = [
 
 const game = {};
 
+// TODO create method for checking if answer is correct
+// TODO look into combining / renaming some methods
+// TODO clean up methods ... try to reduce repeated code
+// TODO organize methods where it makes it more readable
+// TODO remove console.logs for project submission
+
+// EXTRAS
+// TODO add score reactions
+
 // ===================================================== VARIABLES
 game.gameState = false;
 game.players = playerData;
@@ -29,7 +38,7 @@ game.currentQuestion = [];
 game.questionCount = game.players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
-game.highScore = 0;
+// game.highScore = 0;
 
 // number of names the user can guess from
 game.numOfGuessNames =  4; // custom set number
@@ -188,21 +197,23 @@ game.displayResults = function() {
   // result string to display the user's score
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
   const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
-  const highScore = $('<p>').addClass("game__result--highScore");
 
-  if (game.correctAnswers > game.highScore) {
-    game.highScore = game.correctAnswers;
-    highScore.text(`New high score with ${game.correctAnswers} correct player(s)!`);
-  } 
-  else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
-    highScore.text(`You tied the high score with ${game.correctAnswers} correct player(s)!`);
-  }
-  else if (game.highScore !== 0) {
-    highScore.text(`Current high score is ${game.highScore} correct player(s)!`);
-  }
-  else {
-    highScore.text(`No high score has been set yet!`);
-  }
+  // TODO add highscore ?
+  // const highScore = $('<p>').addClass("game__result--highScore");
+
+  // if (game.correctAnswers > game.highScore) {
+  //   game.highScore = game.correctAnswers;
+  //   highScore.text(`New high score with ${game.correctAnswers} correct player(s)!`);
+  // } 
+  // else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
+  //   highScore.text(`You tied the high score with ${game.correctAnswers} correct player(s)!`);
+  // }
+  // else if (game.highScore !== 0) {
+  //   highScore.text(`Current high score is ${game.highScore} correct player(s)!`);
+  // }
+  // else {
+  //   highScore.text(`No high score has been set yet!`);
+  // }
 
   // button to go to the start screen
   const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
@@ -211,7 +222,7 @@ game.displayResults = function() {
   // on click run the resetGame method
   const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
 
-  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton, startScreenButton);
+  gameResultContainer.append(resultHeading, resultScore, resetButton, startScreenButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
