@@ -39,6 +39,11 @@ game.questionCount = game.players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
 game.highScore = 0;
+game.rules = [
+  "Each question presents an image of a player, with 4 player names to choose from",
+  "Select the player's name, and submit your answer to move on to the next question",
+  "Get started by clicking the <em>Start Quiz</em> button below!"
+];
 
 // number of names the user can guess from
 game.numOfNameChoices =  4; // custom set number
@@ -63,8 +68,7 @@ game.loadGameDOM = function() {
   // game image container
   const imgContainer = $('<div>').addClass('imgContainer');
   // game player image
-  const gamePlayerImg = $('<img>').addClass('game__playerImg')
-            .attr('alt', 'Toronto Raptors player to be guessed by the user');
+  const gamePlayerImg = $('<img>').addClass('game__playerImg').attr('alt', 'Toronto Raptors player to be guessed by the user');
   
   // append game player image to the image container
   imgContainer.append(gamePlayerImg);
@@ -78,13 +82,11 @@ game.loadGameDOM = function() {
 
   // append four radio inputs and labels to the game form
   for (i = 1; i <= game.numOfNameChoices; i++) {
-    const formControl = `
-      <div class="game__formControl">
-        <input class="game__input srOnly" type="radio" name="player" id="player${i}" />
-        <label class="game__inputLabel" for="player${i}">Player ${i}</label>
-      </div>
-      `;
-
+    const formControl = $('<div>').addClass('game__formControl');
+    const gameInput = $('<input>').addClass('game__input srOnly').attr({type: 'radio', name: 'player', id: `player${i}`});
+    const gameInputLabel = $('<label>').addClass('game__inputLabel').attr('for', `player${i}`);
+    
+    formControl.append(gameInput, gameInputLabel);
     gridContainer.append(formControl);
   }
 
@@ -164,14 +166,15 @@ game.displayResults = function() {
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
   const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
 
-  const highScore = $('<p>').addClass("game__result--highScore");
+  // const highScore = $('<p>').addClass("game__result--highScore");
   
-  if (game.highScore !== 0 || game.correctAnswers > game.highScore) {
-    // set highscore to the amount of correct answers the user got
-    game.highScore = game.correctAnswers;
-    highScore.text(`Highest Score: ${game.highScore} out of ${game.questionCount} players!`);
-
-  }
+  // if (game.highScore !== 0 || game.correctAnswers > game.highScore) {
+  //   // set highscore to the amount of correct answers the user got
+  //   game.highScore = game.correctAnswers;
+  //   highScore.text(`Highest Score: ${game.highScore} out of ${game.questionCount} players!`);
+  // } else {
+  //   highScore.text(`No high score has been set yet!`);
+  // }
 
   // button to go to the start screen
   const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
@@ -180,7 +183,7 @@ game.displayResults = function() {
   // on click run the resetGame method
   const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
 
-  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton, startScreenButton);
+  gameResultContainer.append(resultHeading, resultScore, resetButton, startScreenButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
@@ -189,8 +192,6 @@ game.displayResults = function() {
   gameContainer.append(gameResultContainer);
 
 }
-
-
 
 // ------------------------- game.setGameEventListeners -------------------------
 
@@ -241,12 +242,13 @@ game.loadStartingDOM = function() {
   const gameRulesContainer = $('<div>').addClass('game__rules');
   const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the 2019-2020 Toronto Raptors!")
   const gameRulesList = $('<ol>').addClass('game__rulesList');
-  const gameRulesListItems = `<li class="game__rulesListItem">Each question presents an image of a player, with 4 player names to choose from</li>
-  <li class="game__rulesListItem">Select the player's name, and submit your answer to move on to the next question</li>
-  <li class="game__rulesListItem">Get started by clicking the <em>Start Quiz</em> button below!</li>`;
-
-  gameRulesList.html(gameRulesListItems);
-
+  
+  // game rules are stored in game.rules
+  game.rules.forEach(rule => {
+    // for each rule create an li and append to the gameRulesList
+    const gameRulesListItem = $('<li>').addClass("game__rulesListItem").html(rule);
+    gameRulesList.append(gameRulesListItem);
+  });
 
   const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.resetGame);
 
@@ -260,11 +262,11 @@ game.startGame = function() {
   // load game DOM elements  
   game.loadGameDOM();
 
-  // get and display the next question
-  game.getAndDisplayNextPlayer();
-  
   // Set Game DOM Event Listeners
   game.setGameEventListeners();
+
+  // get and display the next question
+  game.getAndDisplayNextPlayer();
 
   // Start Game
   gameState = true;
@@ -295,7 +297,6 @@ game.init = function() {
 }
 
 // ------------------------- game.checkUserAnswer -------------------------
-
 game.checkUserAnswer = function() {
   // Get value of the selected answer
   const userAnswer = $('.game__form input[name="player"]:checked').val();
