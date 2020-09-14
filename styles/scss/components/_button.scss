@@ -1,4 +1,4 @@
-.game__button {
+.button {
   font-family: inherit;
   background-color: inherit;
   padding: 1rem 2.5rem;
@@ -15,5 +15,24 @@
     background-color: $color-dark;
     color: #fff;
     cursor: pointer;
+  }
+
+  &--submit {
+    display: block;
+    margin: 0 auto;
+    
+    &:disabled,
+    &:disabled:hover
+    { 
+      border-color: $color-secondary; 
+      background-color: inherit;
+      color: $color-secondary;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled) {
+      border-color: $color-accent;
+    }
+    
   }
 }

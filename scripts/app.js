@@ -89,7 +89,7 @@ game.loadGameDOM = function() {
   }
 
   // game form submit button
-  const gameFormButton = $('<button>').addClass('game__button game__button--submit').text('Submit Answer').attr('disabled', 'disabled');
+  const gameFormButton = $('<button>').addClass('button button--submit').text('Submit Answer').attr('disabled', 'disabled');
 
   // append submit button to the game form
   gameForm.append(gridContainer, gameFormButton);
@@ -162,11 +162,11 @@ game.displayResults = function() {
   const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
 
   // button to go to the start screen
-  const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
+  const startScreenButton = $('<button>').text('Start Screen').addClass('button button--startScreen');
   
   // reset button for the user to play again
   // on click run the startGame method
-  const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.startGame);
+  const resetButton = $('<button>').text('Play Again').addClass('button button--startGame');
 
   gameResultContainer.append(resultHeading, resultScore, resetButton, startScreenButton);
   
@@ -176,34 +176,6 @@ game.displayResults = function() {
   // append the resultString in the gameContainer
   gameContainer.append(gameResultContainer);
 
-}
-
-// ------------------------- game.setGameEventListeners -------------------------
-
-// Setup the event listeners for the game DOM elements after they have been loaded
-game.setGameEventListeners = function() {
-
-  // check if a user has selected an answer to enable the form submit button
-  game.userAnwsers = $('.game__form input[name="player"]').on('change', function() {
-    $('.game__form button').prop('disabled', '')
-  });
-  
-  game.handleSubmit = $('.game__form').on('submit', function(evt) {
-    evt.preventDefault();
-    
-    // check the user's answer against correct answer
-    game.checkUserAnswer();
-    
-    // check if all the questions have been answered, if not display the next question
-    if (game.questionsAnswered === game.questionCount) {
-      // if all the questions have been answered, display the results
-      game.displayResults()
-      
-    } else {
-      // get and display the next player
-      game.getAndDisplayNextPlayer();
-    }
-  });
 }
 
 // ------------------------- game.loadStartingDOM -------------------------
@@ -235,7 +207,7 @@ game.loadStartingDOM = function() {
     gameRulesList.append(gameRulesListItem);
   });
 
-  const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.startGame);
+  const startButton = $('<button>').addClass('button button--startGame').text('Start Quiz');
 
   gameRulesContainer.append(gameRulesHeadline, gameRulesList);
 
@@ -250,21 +222,21 @@ game.startGame = function() {
   // set questions answered correctly to 0
   game.correctAnswers = 0;
 
-  // populate the question in the game container
+  // populate the question in the game object
   game.populateQuestions();
 
   // load game DOM elements  
   game.loadGameDOM();
 
-  // Set Game DOM Event Listeners
-  game.setGameEventListeners();
-
   // get and display the next question
   game.getAndDisplayNextPlayer();
 }
 
-// ------------------------- game.checkUserAnswer -------------------------
-game.checkUserAnswer = function() {
+// ------------------------- game.handleAnswerSubmit -------------------------
+game.handleAnswerSubmit = function(event) {
+  // prevent form submission from refreshing page
+  event.preventDefault();
+
   // Get value of the selected answer
   const userAnswer = $('.game__form input[name="player"]:checked').val();
     
@@ -277,6 +249,16 @@ game.checkUserAnswer = function() {
     
     // Increment questionsAnswered counter
     game.questionsAnswered++;
+    
+    // check if all the questions have been answered, if not display the next question
+    if (game.questionsAnswered === game.questionCount) {
+     // if all the questions have been answered, display the results
+      game.displayResults()
+  
+    } else {
+     // get and display the next player
+      game.getAndDisplayNextPlayer();
+    }
   }
 }
 
@@ -316,14 +298,35 @@ game.getAndDisplayNextPlayer = function() {
   })
 }
 
+// ------------------------- game.setGameEventListeners -------------------------
+game.setGameEventListeners = function() {
+  const gameContainer = $('.game');
+
+  // start game and play again buttons => click to start game
+  gameContainer.on('click', '.button--startGame', game.startGame);
+  
+  // start screen button => click loads the start screen dom elements
+  gameContainer.on('click', '.button--startScreen', game.loadStartingDOM);
+
+  // check if a user has selected an answer to enable the form submit button
+  gameContainer.on('change', 'input[name="player"]', function() {
+    $('.game__form button').prop('disabled', '')
+  });
+
+  // handle user's answer submission
+  gameContainer.on('submit', '.game__form', (event) =>  game.handleAnswerSubmit(event));   
+}
+
+
 // ------------------------- game.init -------------------------
 game.init = function() {  
   // load DOM elements of the start page
   game.loadStartingDOM();
+  game.setGameEventListeners();
+
 }
 
 // ===================================================== DOCUMENT READY
 $(function() {
   game.init();
-  
 });

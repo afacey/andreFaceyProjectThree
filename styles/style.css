@@ -223,7 +223,7 @@ h1 {
   body {
     font-size: 1.6rem; } }
 
-.game__button {
+.button {
   font-family: inherit;
   background-color: inherit;
   padding: 1rem 2.5rem;
@@ -231,10 +231,20 @@ h1 {
   border-radius: 25px;
   text-transform: uppercase;
   transition: background-color 0.3s, color 0.3s; }
-  .game__button:hover, .game__button:active, .game__button:focus {
+  .button:hover, .button:active, .button:focus {
     background-color: #061922;
     color: #fff;
     cursor: pointer; }
+  .button--submit {
+    display: block;
+    margin: 0 auto; }
+    .button--submit:disabled, .button--submit:disabled:hover {
+      border-color: #a1a1a4;
+      background-color: inherit;
+      color: #a1a1a4;
+      cursor: not-allowed; }
+    .button--submit:not(:disabled) {
+      border-color: #b4975a; }
 
 .wrapper {
   max-width: 1200px;
@@ -279,9 +289,6 @@ main {
       font-weight: 700; }
     .game__rulesListItem:not(:last-of-type) {
       margin-bottom: 1rem; }
-  .game__button {
-    display: block;
-    margin: 0 auto; }
   .game__questionTracker {
     margin: 2rem auto; }
   .game .gridContainer {
@@ -306,16 +313,6 @@ main {
     .game__inputLabel::before {
       content: url(../assets/rapsIconRed.ico);
       margin-right: 10px; }
-  .game__button--submit {
-    display: block;
-    margin: 0 auto; }
-    .game__button--submit:disabled, .game__button--submit:disabled:hover {
-      border-color: #a1a1a4;
-      background-color: inherit;
-      color: #a1a1a4;
-      cursor: not-allowed; }
-    .game__button--submit:not(:disabled) {
-      border-color: #b4975a; }
   .game__resultContainer {
     display: flex;
     flex-direction: column;

@@ -32,15 +32,8 @@ main {
     }
   }
 
-  &__button {
-    display: block;
-    margin: 0 auto;
-  }
-
   &__questionTracker {
     margin: 2rem auto;
-    // border-bottom: 2px solid $color-dark;
-    // border-radius: 5px;
   }
 
   .gridContainer {
@@ -76,25 +69,6 @@ main {
       content: url(../assets/rapsIconRed.ico);
       margin-right: 10px;
     }
-  }
-
-  &__button--submit {
-    display: block;
-    margin: 0 auto;
-    
-    &:disabled,
-    &:disabled:hover
-    { 
-      border-color: $color-secondary; 
-      background-color: inherit;
-      color: $color-secondary;
-      cursor: not-allowed;
-    }
-
-    &:not(:disabled) {
-      border-color: $color-accent;
-    }
-    
   }
 
   &__resultContainer {
