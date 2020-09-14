@@ -1,13 +1,11 @@
 // FONTS
-$font-heading: 'Roboto Condensed', Sans-Serif;
-$font-body: 'Cabin', Sans-Serif;
+$fontHeading: 'Roboto Condensed', Sans-Serif;
+$fontBody: 'Cabin', Sans-Serif;
 
-// COLORS
-
-// colors gathered from https://teamcolorcodes.com/toronto-raptors-color-codes/
-$color-primary: rgb(206, 17, 65);
-$color-secondary: rgb(161, 161, 164);
-
-$color-dark: rgb(6,25,34);
-
-$color-accent: rgb(180,151,90)
+// COLORS - 
+$colorLight: rgb(238, 238, 238);
+//gathered from https://teamcolorcodes.com/toronto-raptors-color-codes/
+$colorPrimary: rgb(206, 17, 65);
+$colorSecondary: rgb(161, 161, 164);
+$colorDark: rgb(6,25,34);
+$colorAccent: rgb(180,151,90)

@@ -1,5 +1,6 @@
 body {
-  background-color: #EEE;
+  background-color: $colorLight;
+  color: $colorDark;
 
   .container {
     height: 100vh;

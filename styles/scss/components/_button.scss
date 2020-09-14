@@ -2,7 +2,7 @@
   font-family: inherit;
   background-color: inherit;
   padding: 1rem 2.5rem;
-  border: 3px solid $color-primary;
+  border: 3px solid $colorPrimary;
   border-radius: 25px;
 
   text-transform: uppercase;
@@ -12,26 +12,32 @@
   &:hover,
   &:active,
   &:focus {
-    background-color: $color-dark;
-    color: #fff;
+    background-color: $colorDark;
+    color: $colorLight;
     cursor: pointer;
   }
 
   &--submit {
     display: block;
     margin: 0 auto;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: $colorAccent;
+    }
     
     &:disabled,
     &:disabled:hover
     { 
-      border-color: $color-secondary; 
+      border-color: $colorSecondary; 
       background-color: inherit;
-      color: $color-secondary;
+      color: $colorSecondary;
       cursor: not-allowed;
     }
 
     &:not(:disabled) {
-      border-color: $color-accent;
+      border-color: $colorAccent;
     }
     
   }

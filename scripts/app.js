@@ -4,18 +4,18 @@ const playerData = [
   { name: "Dewan Hernandez", imgSrc: "./assets/dewanHernandez.png"},
   { name: "Fred VanVleet", imgSrc: "./assets/fredVanvleet.png"},
   { name: "Kyle Lowry", imgSrc: "./assets/kyleLowry.png" },
-  { name: "Malcolm Miller", imgSrc: "./assets/malcolmMiller.png" },
-  { name: "Marc Gasol", imgSrc: "./assets/marcGasol.png" },
-  { name: "Matt Thomas", imgSrc: "./assets/mattThomas.png" },
-  { name: "Norman Powell", imgSrc: "./assets/normanPowell.png"},
-  { name: "OG Anunoby", imgSrc: "./assets/ogAnunoby.png" },
-  { name: "Oshae Brissett", imgSrc: "./assets/oshaeBrissett.png" },
-  { name: "Pascal Siakam", imgSrc: "./assets/pascalSiakam.png"},
-  { name: "Patrick McCaw", imgSrc: "./assets/patrickMccaw.png" },
-  { name: "Rondae Hollis-Jefferson", imgSrc: "./assets/rondaeHollisJefferson.png" },
-  { name: "Serge Ibaka", imgSrc: "./assets/sergeIbaka.png" },
-  { name: "Stanley Johnson", imgSrc: "./assets/stanleyJohnson.png" },
-  { name: "Terence Davis", imgSrc: "./assets/terenceDavis.png"}
+  // { name: "Malcolm Miller", imgSrc: "./assets/malcolmMiller.png" },
+  // { name: "Marc Gasol", imgSrc: "./assets/marcGasol.png" },
+  // { name: "Matt Thomas", imgSrc: "./assets/mattThomas.png" },
+  // { name: "Norman Powell", imgSrc: "./assets/normanPowell.png"},
+  // { name: "OG Anunoby", imgSrc: "./assets/ogAnunoby.png" },
+  // { name: "Oshae Brissett", imgSrc: "./assets/oshaeBrissett.png" },
+  // { name: "Pascal Siakam", imgSrc: "./assets/pascalSiakam.png"},
+  // { name: "Patrick McCaw", imgSrc: "./assets/patrickMccaw.png" },
+  // { name: "Rondae Hollis-Jefferson", imgSrc: "./assets/rondaeHollisJefferson.png" },
+  // { name: "Serge Ibaka", imgSrc: "./assets/sergeIbaka.png" },
+  // { name: "Stanley Johnson", imgSrc: "./assets/stanleyJohnson.png" },
+  // { name: "Terence Davis", imgSrc: "./assets/terenceDavis.png"}
 ]
 
 const raptorsQuiz = {};
@@ -33,7 +33,7 @@ raptorsQuiz.questionCount = raptorsQuiz.playerData.length;
 raptorsQuiz.questionsAnswered = 0;
 raptorsQuiz.correctAnswers = 0;
 raptorsQuiz.instructions = [
-  "Each question presents an image of a player, with 4 player names to choose from",
+  "Each question presents an image of a raptor player, and 4 names to guess from",
   "Select the player's name, and submit your answer to move on to the next question",
   "Get started by clicking the <em>Start Quiz</em> button below!"
 ];
@@ -183,10 +183,10 @@ raptorsQuiz.displayResults = function() {
 
   // result string to display the user's score
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
-  const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${raptorsQuiz.correctAnswers} out of ${raptorsQuiz.questionCount}</span> players correct!`);
+  const resultScore = $('<p>').addClass("game__result--text").html(`You answered <span class="game__result--score">${raptorsQuiz.correctAnswers} out of ${raptorsQuiz.questionCount}</span> players correct!`);
 
   // restart game button for the user to play again
-  const restartGameButton = $('<button>').text('Play Again').addClass('button button--startGame');
+  const restartGameButton = $('<button>').text('Take Quiz Again').addClass('button button--startGame');
   
   // button to go to the start screen
   const viewStartScreenButton = $('<button>').text('View Start Screen').addClass('button button--startScreen');
@@ -215,26 +215,26 @@ raptorsQuiz.loadStartingDOM = function() {
   // append game player image to the image container
   imgContainer.append(teamLogoImg);
 
-  // .game__rules div
-  const gameRulesContainer = $('<div>').addClass('game__rules');
-  const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the 2019-2020 Toronto Raptors!")
-  const gameRulesList = $('<ol>').addClass('game__rulesList');
+  // .game__instructions div
+  const gameInstructionsContainer = $('<div>').addClass('game__instructions');
+  const gameInstructionsHeadline = $('<p>').addClass('game__instructionsHeadline').text("Let's see how well you know the players of the 2019-2020 Toronto Raptors!")
+  const gameInstructionsList = $('<ol>').addClass('game__instructionsList');
   
   // game rules are stored in raptorsQuiz.instructions
   raptorsQuiz.instructions.forEach(rule => {
-    // for each rule create an li and append to the gameRulesList
-    const gameRulesListItem = $('<li>').addClass("game__rulesListItem").html(rule);
-    gameRulesList.append(gameRulesListItem);
+    // for each rule create an li and append to the gameInstructionsList
+    const gameInstructionsListItem = $('<li>').addClass("game__instructionsListItem").html(rule);
+    gameInstructionsList.append(gameInstructionsListItem);
   });
 
   const startButton = $('<button>').addClass('button button--startGame').text('Start Quiz');
 
-  gameRulesContainer.append(gameRulesHeadline, gameRulesList);
+  gameInstructionsContainer.append(gameInstructionsHeadline, gameInstructionsList);
 
   // Empty contents of the .game div
   gameContainer.empty();
 
-  gameContainer.append(imgContainer, gameRulesContainer, startButton);
+  gameContainer.append(imgContainer, gameInstructionsContainer, startButton);
 }
 
 // ------------------------- raptorsQuiz.loadGameDOM -------------------------
