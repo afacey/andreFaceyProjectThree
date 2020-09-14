@@ -233,7 +233,8 @@ h1 {
   transition: background-color 0.3s, color 0.3s; }
   .game__button:hover, .game__button:active, .game__button:focus {
     background-color: #061922;
-    color: #fff; }
+    color: #fff;
+    cursor: pointer; }
 
 .wrapper {
   max-width: 1200px;
