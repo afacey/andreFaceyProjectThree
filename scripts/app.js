@@ -155,7 +155,12 @@ raptorsQuiz.handleAnswerSubmit = function(event) {
     // check if all the questions have been answered, if not display the next question
     if (raptorsQuiz.questionsAnswered === raptorsQuiz.questionCount) {
      // if all the questions have been answered, display the results
-      raptorsQuiz.displayResults()
+     // create a fade out and fade in effect to display the results page
+      const gameContainer = $('.game');
+      gameContainer.fadeOut(300, () => {
+        raptorsQuiz.displayResults()
+        gameContainer.fadeIn(300);
+      })
   
     } else {
      // get and display the next player
@@ -288,7 +293,13 @@ raptorsQuiz.setupGameEventListeners = function() {
   gameContainer.on('click', '.button--startGame', raptorsQuiz.startGame);
   
   // start screen button => click loads the start screen dom elements
-  gameContainer.on('click', '.button--startScreen', raptorsQuiz.loadStartingDOM);
+  gameContainer.on('click', '.button--startScreen', () => {
+    // create fade out and fade in effect when loading the start screen dom elements
+    gameContainer.fadeOut(300, () => {
+      raptorsQuiz.loadStartingDOM();
+      gameContainer.fadeIn(300);
+    });
+  }); 
 
   // check if a user has selected an answer to enable the form submit button
   gameContainer.on('change', 'input[name="player"]', () => $('.game__form button').prop('disabled', ''));
@@ -308,18 +319,19 @@ raptorsQuiz.startGame = function() {
   // populate the question in the game object
   raptorsQuiz.generateQuestions();
 
+  // select gameContainer to create a fade out and fade in effect
   const gameContainer = $('.game');
 
-  gameContainer.fadeOut(400, () => {
+  gameContainer.fadeOut(300, () => {
     // load game DOM elements  
     raptorsQuiz.loadGameDOM();
     
     // get and display the next question
     raptorsQuiz.getAndDisplayNextQuestion();
-    
-    // fade in the game container contents
-    gameContainer.fadeIn(400);
+
+    gameContainer.fadeIn(300);
   });
+
 }
 
 // ------------------------- raptorsQuiz.init -------------------------
