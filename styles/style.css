@@ -348,7 +348,6 @@ footer {
   footer a {
     color: #ce1141;
     text-decoration: underline;
-    padding: 1rem;
     transition: color 0.3s; }
     footer a:hover, footer a:active, footer a:focus {
       color: #b4975a; }

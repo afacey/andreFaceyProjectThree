@@ -31,15 +31,13 @@ const game = {};
 // TODO add score reactions
 
 // ===================================================== VARIABLES
-game.gameState = false;
 game.players = playerData;
 game.questions = [];
 game.currentQuestion = [];
 game.questionCount = game.players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
-game.highScore = 0;
-game.rules = [
+game.instructions = [
   "Each question presents an image of a player, with 4 player names to choose from",
   "Select the player's name, and submit your answer to move on to the next question",
   "Get started by clicking the <em>Start Quiz</em> button below!"
@@ -154,9 +152,6 @@ game.populateQuestions = function() {
 
 // ------------------------- game.displayResults -------------------------
 game.displayResults = function() {
-  // Set game state to off (false)
-  gameState = false;
-
   // store .game div as a variable for use later
   const gameContainer = $('.game');
 
@@ -166,22 +161,12 @@ game.displayResults = function() {
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
   const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
 
-  // const highScore = $('<p>').addClass("game__result--highScore");
-  
-  // if (game.highScore !== 0 || game.correctAnswers > game.highScore) {
-  //   // set highscore to the amount of correct answers the user got
-  //   game.highScore = game.correctAnswers;
-  //   highScore.text(`Highest Score: ${game.highScore} out of ${game.questionCount} players!`);
-  // } else {
-  //   highScore.text(`No high score has been set yet!`);
-  // }
-
   // button to go to the start screen
   const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
   
   // reset button for the user to play again
-  // on click run the resetGame method
-  const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
+  // on click run the startGame method
+  const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.startGame);
 
   gameResultContainer.append(resultHeading, resultScore, resetButton, startScreenButton);
   
@@ -243,14 +228,14 @@ game.loadStartingDOM = function() {
   const gameRulesHeadline = $('<p>').addClass('game__rulesHeadline').text("Let's see how well you know the players of the 2019-2020 Toronto Raptors!")
   const gameRulesList = $('<ol>').addClass('game__rulesList');
   
-  // game rules are stored in game.rules
-  game.rules.forEach(rule => {
+  // game rules are stored in game.instructions
+  game.instructions.forEach(rule => {
     // for each rule create an li and append to the gameRulesList
     const gameRulesListItem = $('<li>').addClass("game__rulesListItem").html(rule);
     gameRulesList.append(gameRulesListItem);
   });
 
-  const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.resetGame);
+  const startButton = $('<button>').addClass('game__button').text('Start Quiz').on('click', game.startGame);
 
   gameRulesContainer.append(gameRulesHeadline, gameRulesList);
 
@@ -259,6 +244,15 @@ game.loadStartingDOM = function() {
 
 // ------------------------- game.startGame -------------------------
 game.startGame = function() {
+  // set questions answered to 0
+  game.questionsAnswered = 0;
+
+  // set questions answered correctly to 0
+  game.correctAnswers = 0;
+
+  // populate the question in the game container
+  game.populateQuestions();
+
   // load game DOM elements  
   game.loadGameDOM();
 
@@ -267,33 +261,6 @@ game.startGame = function() {
 
   // get and display the next question
   game.getAndDisplayNextPlayer();
-
-  // Start Game
-  gameState = true;
-}
-
-// ------------------------- game.resetGame -------------------------
-game.resetGame = function() {
-  // reset questions answered to 0
-  game.questionsAnswered = 0;
-
-  // reset questions answered correctly to 0
-  game.correctAnswers = 0;
-
-  // call populateQuestions method to populate questions array
-  game.populateQuestions();
-
-  // call startGame method to reload the game DOM elements and display the next question
-  game.startGame();
-}
-
-// ------------------------- game.init -------------------------
-game.init = function() {
-  // populate the question in the game container
-  game.populateQuestions();
-  
-  // load DOM elements of the start page
-  game.loadStartingDOM();
 }
 
 // ------------------------- game.checkUserAnswer -------------------------
@@ -314,7 +281,6 @@ game.checkUserAnswer = function() {
 }
 
 // ------------------------- game.getAndDisplayNextQuestion -------------------------
-
 game.getAndDisplayNextPlayer = function() {
   // get random index to get a random 
   const randomIdx = game.getRandomIdx(game.questions);
@@ -348,6 +314,12 @@ game.getAndDisplayNextPlayer = function() {
     // Set form button to disabled ... event listener enables button once player selects an answer
     $('.game__form button').attr('disabled', 'disabled');
   })
+}
+
+// ------------------------- game.init -------------------------
+game.init = function() {  
+  // load DOM elements of the start page
+  game.loadStartingDOM();
 }
 
 // ===================================================== DOCUMENT READY
