@@ -244,7 +244,7 @@ raptorsQuiz.loadGameDOM = function() {
 
   // Empty contents of the .game div
   gameContainer.empty();
-
+  
   // game image container
   const imgContainer = $('<div>').addClass('imgContainer');
   // game player image
@@ -308,11 +308,18 @@ raptorsQuiz.startGame = function() {
   // populate the question in the game object
   raptorsQuiz.generateQuestions();
 
-  // load game DOM elements  
-  raptorsQuiz.loadGameDOM();
+  const gameContainer = $('.game');
 
-  // get and display the next question
-  raptorsQuiz.getAndDisplayNextQuestion();
+  gameContainer.fadeOut(400, () => {
+    // load game DOM elements  
+    raptorsQuiz.loadGameDOM();
+    
+    // get and display the next question
+    raptorsQuiz.getAndDisplayNextQuestion();
+    
+    // fade in the game container contents
+    gameContainer.fadeIn(400);
+  });
 }
 
 // ------------------------- raptorsQuiz.init -------------------------

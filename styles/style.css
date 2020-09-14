@@ -339,7 +339,7 @@ body {
   background-color: #eeeeee;
   color: #061922; }
   body .container {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
@@ -362,7 +362,6 @@ main {
   border-bottom: 3px solid #ce1141; }
 
 footer {
-  text-align: center;
   padding: 2rem 0;
   background-color: #061922;
   color: #ce1141;

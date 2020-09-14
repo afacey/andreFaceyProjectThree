@@ -1,17 +1,15 @@
 footer {
-  // font-size: 1.4rem;
-  text-align: center;
   padding: 2rem 0;
   background-color: $colorDark;
   color: $colorPrimary;
-    text-align: center; 
+  text-align: center; 
 
   p:not(:last-of-type) { margin-bottom: 1rem; }
 
+  // -------------------------- FOOTER LINKS
   a {
     color: $colorPrimary;
     text-decoration: underline;
-    // padding: 1rem;
     transition: color 0.3s;
 
     &:hover,
@@ -23,6 +21,7 @@ footer {
   
 }
 
+// -------------------------- MOBILE MEDIA QUEURY
 @media (max-width: 480px) {
   footer { font-size: 1.4rem; }
 }

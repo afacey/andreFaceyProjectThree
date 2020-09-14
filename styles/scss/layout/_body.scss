@@ -2,8 +2,9 @@ body {
   background-color: $colorLight;
   color: $colorDark;
 
+// -------------------------- CONTAINER FOR HEADER, MAIN, AND FOOTER
   .container {
-    height: 100vh;
+    min-height: 100vh; // min-height so that the footer gets pushed to the bottom of the page
     display: flex;
     flex-direction: column;
     justify-content: space-between;

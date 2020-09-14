@@ -9,6 +9,7 @@
     margin: 0 auto;
   }
 
+// -------------------------- START SCREEN
   &__instructions {
     margin: 2rem 0;
 
@@ -34,10 +35,12 @@
     }
   }
 
+// -------------------------- QUIZ QUESTIONS SCREEN
   &__questionTracker {
     margin: 2rem auto;
   }
 
+// -------------------------- RESULTS SCREEN
   &__resultContainer {
     display: flex;
     flex-direction: column;
@@ -55,6 +58,7 @@
 
 }
 
+// -------------------------- MOBILE MEDIA QUEURY
 @media (max-width: 480px) {
   .game {
 
