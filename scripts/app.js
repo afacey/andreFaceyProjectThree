@@ -38,7 +38,7 @@ game.currentQuestion = [];
 game.questionCount = game.players.length;
 game.questionsAnswered = 0;
 game.correctAnswers = 0;
-// game.highScore = 0;
+game.highScore = 0;
 
 // number of names the user can guess from
 game.numOfNameChoices =  4; // custom set number
@@ -164,22 +164,14 @@ game.displayResults = function() {
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
   const resultScore = $('<p>').addClass("game__result--heading").html(`You answered <span class="game__result--score">${game.correctAnswers} out of ${game.questionCount}</span> players correct!`);
 
-  // TODO add highscore ?
-  // const highScore = $('<p>').addClass("game__result--highScore");
+  const highScore = $('<p>').addClass("game__result--highScore");
+  
+  if (game.highScore !== 0 || game.correctAnswers > game.highScore) {
+    // set highscore to the amount of correct answers the user got
+    game.highScore = game.correctAnswers;
+    highScore.text(`Highest Score: ${game.highScore} out of ${game.questionCount} players!`);
 
-  // if (game.correctAnswers > game.highScore) {
-  //   game.highScore = game.correctAnswers;
-  //   highScore.text(`New high score with ${game.correctAnswers} correct player(s)!`);
-  // } 
-  // else if (game.correctAnswers !== 0 && game.correctAnswers === game.highScore) {
-  //   highScore.text(`You tied the high score with ${game.correctAnswers} correct player(s)!`);
-  // }
-  // else if (game.highScore !== 0) {
-  //   highScore.text(`Current high score is ${game.highScore} correct player(s)!`);
-  // }
-  // else {
-  //   highScore.text(`No high score has been set yet!`);
-  // }
+  }
 
   // button to go to the start screen
   const startScreenButton = $('<button>').text('Start Screen').addClass('game__button').on('click', game.loadStartingDOM);
@@ -188,7 +180,7 @@ game.displayResults = function() {
   // on click run the resetGame method
   const resetButton = $('<button>').text('Play Again').addClass('game__button').on('click', game.resetGame);
 
-  gameResultContainer.append(resultHeading, resultScore, resetButton, startScreenButton);
+  gameResultContainer.append(resultHeading, resultScore, highScore, resetButton, startScreenButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
@@ -223,7 +215,6 @@ game.setGameEventListeners = function() {
       
     } else {
       // get and display the next player
-      console.log('on submit')
       game.getAndDisplayNextPlayer();
     }
   });
@@ -270,7 +261,6 @@ game.startGame = function() {
   game.loadGameDOM();
 
   // get and display the next question
-  console.log('on start game');
   game.getAndDisplayNextPlayer();
   
   // Set Game DOM Event Listeners
@@ -330,9 +320,6 @@ game.getAndDisplayNextPlayer = function() {
   
   // splice to remove player out of the player question pool, and store it as the next question
   game.currentQuestion = game.questions.splice(randomIdx, 1)[0];
-
-  console.table('questions',game.questions);
-  console.table('current ques', game.currentQuestion);
   
   // store game.currentQuestion into variable
   const player = game.currentQuestion;
