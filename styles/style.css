@@ -232,11 +232,11 @@ h3 {
 
 .button {
   font-family: inherit;
+  text-transform: uppercase;
   background-color: inherit;
   padding: 1rem 2.5rem;
   border: 3px solid #ce1141;
   border-radius: 25px;
-  text-transform: uppercase;
   transition: background-color 0.3s, color 0.3s; }
   .button:hover, .button:active, .button:focus {
     background-color: #061922;

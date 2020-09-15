@@ -1,5 +1,5 @@
 .game__form {
-  // -------------------------- MAKE CHOICES DISPLAY IN A 2 COLUMN GRID
+  // make choices display in a 2 column grid
   .gridContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -11,7 +11,7 @@
     width: 100%;
   }
   
-  // -------------------------- LABEL STYLES WHILE RADIO INPUT IS CHECKED
+  // label styling whhile radio input is checked
   .game__input:checked + .game__inputLabel {
     border: 4px solid $colorPrimary;
     background-color: $colorDark;
@@ -32,7 +32,7 @@
       border-color: $colorAccent;
     }
 
-    // -------------------------- ADD RAPTORS LOGO ICON IN PLACE OF "VISUALLY HIDDEN" RADIO INPUT
+    // add raptors logo icon in place of "visually hidden" radio input
     &::before {
       content: url(../assets/rapsIconRed.ico);
       margin-right: 10px;
@@ -42,6 +42,7 @@
 
 // -------------------------- MEDIA QUEURY
 @media (max-width: 480px) {
+  // make choices display in a single column grid on mobile
   .game__form .gridContainer { 
     grid-template-columns: 1fr;
     gap: 1.5rem;
