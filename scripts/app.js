@@ -1,3 +1,4 @@
+// ===================================================== PLAYER DATA
 // player data ... images taken from https://www.nba.com/raptors/roster
 const playerData = [
   { name: "Chris Boucher", imgSrc: "./assets/chrisBoucher.png" },
@@ -18,6 +19,7 @@ const playerData = [
   // { name: "Terence Davis", imgSrc: "./assets/terenceDavis.png"}
 ]
 
+// ===================================================== NAMESPACE
 const raptorsQuiz = {};
 
 // TODO remove console.logs for project submission
@@ -25,16 +27,18 @@ const raptorsQuiz = {};
 // EXTRAS
 // TODO add score reactions
 
-// ===================================================== VARIABLES
-raptorsQuiz.playerData = playerData;
-raptorsQuiz.questions = [];
-raptorsQuiz.currentQuestion = [];
-raptorsQuiz.questionCount = raptorsQuiz.playerData.length;
-raptorsQuiz.questionsAnswered = 0;
-raptorsQuiz.correctAnswers = 0;
+// ===================================================== NAMESPACE > VARIABLES
+raptorsQuiz.playerData = playerData; // store external player data
+raptorsQuiz.questions = []; // array to store questions that will be generated later
+raptorsQuiz.currentQuestion = []; // store current question information
+raptorsQuiz.totalQuestions = raptorsQuiz.playerData.length; // total questions determined by amount of player data
+raptorsQuiz.questionsAnswered = 0; // counter for the amount of questions answered
+raptorsQuiz.correctAnswers = 0; // counter for the amoutn of questions answered correctly
+
+// quiz instruction items
 raptorsQuiz.instructions = [
-  "Each question presents an image of a raptor player, and 4 names to guess from",
-  "Select the player's name, and submit your answer to move on to the next question",
+  "Each question presents an image of a raptors player, and 4 names to guess from",
+  "Select a player's name, and submit your answer to move on to the next question",
   "Get started by clicking the <em>Start Quiz</em> button below!"
 ];
 
@@ -47,7 +51,7 @@ if (raptorsQuiz.numOfNameChoices >= raptorsQuiz.playerData.length) {
   raptorsQuiz.numOfNameChoices = raptorsQuiz.playerData.length;
 }
 
-// ===================================================== METHODS
+// ===================================================== NAMESPACE >  METHODS
 
 // ------------------------- raptorsQuiz.getRandomIdx -------------------------
 raptorsQuiz.getRandomIdx = function(array) {
@@ -69,12 +73,12 @@ raptorsQuiz.generateQuestions = function() {
 }
 
 // ------------------------- raptorsQuiz.getRandomNameChoices -------------------------
-raptorsQuiz.getRandomNameChoices = function(notIdx) {
+raptorsQuiz.getRandomNameChoices = function(currentNameIdx) {
   // make a copy of the players array
   const players = raptorsQuiz.playerData.slice();
   
   // remove the players name from the copy of the players array and store it for later
-  const removedName = players.splice(notIdx, 1)[0].name;
+  const removedName = players.splice(currentNameIdx, 1)[0].name;
   
   // create an array to hold the player names
   const playerNames = [];
@@ -88,19 +92,21 @@ raptorsQuiz.getRandomNameChoices = function(notIdx) {
     players.splice(randomIdx, 1);
   }
 
-  // get random index of the array + placeholder (3 names + [''] <= to get 4 index options)
+  // get random index of the array + placeholder (numOfNameChoices names + [''] <= to get numOfNameChoices + 1 array index choices)
+  // example. numOfNameChoices = 4, since there are 3 names stored in playerNames
+  // to get up to 4 random index choices, an array with length of 4 will need to be passed as an argument
   const randomIdx = raptorsQuiz.getRandomIdx(playerNames.concat(['']));
 
   // add in player's name that was removed in random location in array
   playerNames.splice(randomIdx, 0, removedName);
   
-  // return the 3 randomly selected names + player's actual name in random order
+  // return the randomly selected names + player's actual name in random order
   return playerNames; 
 }
 
 // ------------------------- raptorsQuiz.getAndDisplayNextQuestion -------------------------
 raptorsQuiz.getAndDisplayNextQuestion = function() {
-  // get random index to get a random 
+  // get random index to pick a player in random order
   const randomIdx = raptorsQuiz.getRandomIdx(raptorsQuiz.questions);
   
   // splice to remove player out of the player question pool, and store it as the next question
@@ -113,7 +119,7 @@ raptorsQuiz.getAndDisplayNextQuestion = function() {
   $('.game__playerImg').attr('src', player.imgSrc);
 
   // Display question count
-  $('.game__questionTracker').text(`Question ${raptorsQuiz.questionsAnswered + 1} / ${raptorsQuiz.questionCount}`);
+  $('.game__questionTracker').text(`Question ${raptorsQuiz.questionsAnswered + 1} / ${raptorsQuiz.totalQuestions}`);
   
   // Remove checked property from previously selected answer
   $('.game__form input[name="player"]:checked').prop("checked", false);
@@ -129,7 +135,7 @@ raptorsQuiz.getAndDisplayNextQuestion = function() {
     // Set input value to playerName
     $(`#${labelFor}`).attr('value', playerName);
 
-    // Set form button to disabled ... event listener enables button once player selects an answer
+    // Set form button to disabled ... event listener enables button once player clicks on an answer
     $('.game__form button').attr('disabled', 'disabled');
   })
 }
@@ -153,7 +159,7 @@ raptorsQuiz.handleAnswerSubmit = function(event) {
     raptorsQuiz.questionsAnswered++;
     
     // check if all the questions have been answered, if not display the next question
-    if (raptorsQuiz.questionsAnswered === raptorsQuiz.questionCount) {
+    if (raptorsQuiz.questionsAnswered === raptorsQuiz.totalQuestions) {
      // if all the questions have been answered, display the results
      // create a fade out and fade in effect to display the results page
       const gameContainer = $('.game');
@@ -186,9 +192,9 @@ raptorsQuiz.displayResults = function() {
   // create div to contain result elements
   const gameResultContainer = $('<div>').addClass('game__resultContainer');
 
-  // result string to display the user's score
+  // result text to display the user's score
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
-  const resultScore = $('<p>').addClass("game__result--text").html(`You answered <span class="game__result--score">${raptorsQuiz.correctAnswers} out of ${raptorsQuiz.questionCount}</span> players correct!`);
+  const resultScore = $('<p>').addClass("game__result--text").html(`You answered <span class="game__result--score">${raptorsQuiz.correctAnswers} out of ${raptorsQuiz.totalQuestions}</span> players correct!`);
 
   // restart game button for the user to play again
   const restartGameButton = $('<button>').text('Take Quiz Again').addClass('button button--startGame');
@@ -196,6 +202,7 @@ raptorsQuiz.displayResults = function() {
   // button to go to the start screen
   const viewStartScreenButton = $('<button>').text('View Start Screen').addClass('button button--startScreen');
 
+  // append the result dom elements to the game results container
   gameResultContainer.append(resultHeading, resultScore, restartGameButton, viewStartScreenButton);
   
   // empty DOM elements in the gameContainer
@@ -232,6 +239,7 @@ raptorsQuiz.loadStartingDOM = function() {
     gameInstructionsList.append(gameInstructionsListItem);
   });
 
+  // button to start the quiz
   const startButton = $('<button>').addClass('button button--startGame').text('Start Quiz');
 
   gameInstructionsContainer.append(gameInstructionsHeadline, gameInstructionsList);
@@ -263,23 +271,25 @@ raptorsQuiz.loadGameDOM = function() {
 
   // game form containing the radio inputs and labels, and submit button
   const gameForm = $('<form>').addClass('game__form');
-  const gridContainer = $('<div>').addClass('gridContainer');
+  const formGridContainer = $('<div>').addClass('gridContainer');
 
-  // append four radio inputs and labels to the game form
+  // append value of 'numOfNameChoices' radio inputs and labels to the game form
   for (i = 1; i <= raptorsQuiz.numOfNameChoices; i++) {
     const formControl = $('<div>').addClass('game__formControl');
     const gameInput = $('<input>').addClass('game__input srOnly').attr({type: 'radio', name: 'player', id: `player${i}`});
     const gameInputLabel = $('<label>').addClass('game__inputLabel').attr('for', `player${i}`);
     
+    // append the gameInput and gameInputLabel to the formControl container
     formControl.append(gameInput, gameInputLabel);
-    gridContainer.append(formControl);
+    // append the formControl container to the form formGridContainer
+    formGridContainer.append(formControl);
   }
 
   // game form submit button
   const gameFormButton = $('<button>').addClass('button button--submit').text('Submit Answer').attr('disabled', 'disabled');
 
   // append submit button to the game form
-  gameForm.append(gridContainer, gameFormButton);
+  gameForm.append(formGridContainer, gameFormButton);
 
   // append the image container, question tracker, and game form to the game container
   gameContainer.append(imgContainer, questionTracker, gameForm);
@@ -287,6 +297,7 @@ raptorsQuiz.loadGameDOM = function() {
 
 // ------------------------- raptorsQuiz.setupGameEventListeners -------------------------
 raptorsQuiz.setupGameEventListeners = function() {
+  // store game container in variable for later use
   const gameContainer = $('.game');
 
   // start game and play again buttons => click to start game
@@ -329,6 +340,7 @@ raptorsQuiz.startGame = function() {
     // get and display the next question
     raptorsQuiz.getAndDisplayNextQuestion();
 
+    // fade game container back in
     gameContainer.fadeIn(300);
   });
 
