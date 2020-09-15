@@ -37,6 +37,14 @@ raptorsQuiz.instructions = [
   "Get started by clicking the <em>Start Quiz</em> button below!"
 ];
 
+// quiz result reactions
+raptorsQuiz.resultReactions = {
+  low: "😅 Don't worry! It's not too late to join the bandwagon! 😅",
+  medium: "🙃 Casual fan maybe? 🙃",
+  high: "😁 Nice! You must be a regular game watcher! 😁",
+  perfect: "😎 You must be a super fan! 😎"
+}
+
 // number of names the user can guess from
 raptorsQuiz.numOfNameChoices =  4; // custom set number
 
@@ -170,6 +178,20 @@ raptorsQuiz.handleAnswerSubmit = function(event) {
   }
 }
 
+// ------------------------- raptorsQuiz.getResultsReaction -------------------------
+
+raptorsQuiz.getResultsReaction = function() {
+  const userScore = Math.round(raptorsQuiz.correctAnswers / raptorsQuiz.totalQuestions * 100);
+  let scoreRank = "";
+
+  if (userScore === 100) { scoreRank = "perfect" }
+  else if (userScore >= 70) { scoreRank = "high" }
+  else if (userScore >= 40) { scoreRank = "medium" }
+  else { scoreRank = "low" }
+
+  return raptorsQuiz.resultReactions[scoreRank];
+}
+
 // ------------------------- raptorsQuiz.displayResults -------------------------
 raptorsQuiz.displayResults = function() {
   // store .game div as a variable for use later
@@ -187,9 +209,12 @@ raptorsQuiz.displayResults = function() {
   // create div to contain result elements
   const gameResultContainer = $('<div>').addClass('game__resultContainer');
 
-  // result text to display the user's score
+  // result heading text
   const resultHeading = $('<h2>').addClass("game__result--heading").text("Quiz Finished!");
+  // result score text
   const resultScore = $('<p>').addClass("game__result--text").html(`You answered <span class="game__result--score">${raptorsQuiz.correctAnswers} out of ${raptorsQuiz.totalQuestions}</span> players correct!`);
+  // result reacion text
+  const resultReaction = $('<p>').addClass("game__result--reaction").text(raptorsQuiz.getResultsReaction);
 
   // restart game button for the user to play again
   const restartGameButton = $('<button>').text('Take Quiz Again').addClass('button button--startGame');
@@ -198,7 +223,7 @@ raptorsQuiz.displayResults = function() {
   const viewStartScreenButton = $('<button>').text('View Start Screen').addClass('button button--startScreen');
 
   // append the result dom elements to the game results container
-  gameResultContainer.append(resultHeading, resultScore, restartGameButton, viewStartScreenButton);
+  gameResultContainer.append(resultHeading, resultScore, resultReaction, restartGameButton, viewStartScreenButton);
   
   // empty DOM elements in the gameContainer
   gameContainer.empty();
