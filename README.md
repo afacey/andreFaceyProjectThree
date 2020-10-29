@@ -10,5 +10,15 @@ JavaScript | jQuery | HTML | SCSS
 
 View live at [afacey.github.io/guessTheTorontoRaptor][live]
 
+## Requirements
+
+* It is clear to the user what the app does
+* Adds to the DOM dynamically using JavaScript
+* Interacts with the DOM using events or taking input from the user
+* Modern ES6 variable declarations used (let, const)
+* App and interactions are accessible
+* Errors are handled effectively
+* Sass is used
+
 [mockup]: https://andrefacey.com/assets/mockups/guessTheRaptor-mockup-lg.png
 [live]: https://afacey.github.io/guessTheTorontoRaptor/
