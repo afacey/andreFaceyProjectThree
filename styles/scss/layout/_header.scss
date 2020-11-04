@@ -1,6 +1,6 @@
 header {
-  background-color: $colorDark;
-  padding: 2rem 0;
+  // background-color: $colorDark;
+  padding: 30px 0 50px;
   
   h1 { 
     color: $colorPrimary;
@@ -10,5 +10,5 @@ header {
 
 // -------------------------- MOBILE MEDIA QUERY
 @media (max-width: 480px) {
- header { padding-bottom: 1rem;}
+ header { padding: 20px 0;}
 }

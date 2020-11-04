@@ -5,7 +5,7 @@
     
   .imgContainer {
     // set to 260px as the player images are 260px wide
-    max-width: 260px;
+    max-width: 360px;
     margin: 0 auto;
   }
 
@@ -14,7 +14,7 @@
     margin: 2rem 0;
 
     &Headline {
-      margin-bottom: 1rem;
+      margin: 30px 0 10px;
       text-align: center;
     }
 
@@ -62,7 +62,14 @@
 @media (max-width: 480px) {
   .game {
 
-    .imgContainer { max-width: 200px; }
+    &__instructions {
+  
+      &Headline {
+        margin: 0;
+      }
+    }
+
+    .imgContainer { max-width: 260px; }
 
     &__questionTracker { margin: 1rem auto; }
     
